@@ -8,10 +8,6 @@
   <strong>因开放而精彩，因开源而未来</strong>
 </p>
 
-<p align="center">
-  <a href="mailto:opensource@kecheng.edu.cn">联系我们</a>
-</p>
-
 ---
 
 ## 社团简介
@@ -129,5 +125,5 @@ python -m http.server 8080
 ---
 
 <p align="center">
-  Made with ❤️
+  Made with Memset
 </p>
