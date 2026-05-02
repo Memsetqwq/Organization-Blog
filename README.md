@@ -66,7 +66,7 @@
 | [Version_0.1](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.1) | 经典三栏版 | 经典三栏布局，Shader 背景动画，支持深色/浅色主题切换 |
 | [Version_0.2](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.2) | 全屏沉浸版 | 全屏沉浸式设计，滚动动画，现代化卡片布局 |
 | [Version_0.3](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.3) | 精致优化版 | 基于 v2 优化，添加系统级明暗主题，WebGL 背景增强 |
-| [master](https://github.com/Memsetqwq/Organization-Blog/tree/master) | 主分支 | 包含所有版本的最新整合 |
+| [main](https://github.com/Memsetqwq/Organization-Blog/tree/main) | 主分支 | 包含所有版本的最新整合 |
 
 ### 各版本特性对比
 
