@@ -44,13 +44,13 @@
 
 ## 核心成员
 
-| 姓名 | 职位 | 备注 |
-|-----|------|------|
-| 陈圣夫 | 会长 | 社团负责人 |
-| 李枨 | 副会长 | OpenTenBase 方向负责人 |
-| 李星谕 | 副会长 | 技术骨干 |
-| 柴诗雨 | 副会长 | 社团骨干 |
-| 林涛 | 副会长 | 社团骨干 |
+| 姓名 | 职位 |
+|-----|------|
+| 陈圣夫 | 会长 |
+| 李枨 | 副会长 |
+| 李星谕 | 副会长 |
+| 柴诗雨 | 副会长 |
+| 林涛 | 副会长 |
 
 ## 荣誉奖项
 
@@ -59,29 +59,78 @@
 - **春耕计划优秀组织高校** - 社团组织工作获全国性认可 (2025)
 - **OpenTenBase 核心贡献挑战赛** - 社团成员荣获竞赛奖项 (2024)
 
+---
+
+## 版本历史
+
+本仓库采用分支管理，每个版本独立迭代：
+
+| 分支 | 版本 | 描述 |
+|-----|------|------|
+| [Version_0.1](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.1) | 经典三栏版 | 经典三栏布局，Shader 背景动画，支持深色/浅色主题切换 |
+| [Version_0.2](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.2) | 全屏沉浸版 | 全屏沉浸式设计，滚动动画，现代化卡片布局 |
+| [Version_0.3](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.3) | 精致优化版 | 基于 v2 优化，添加系统级明暗主题，WebGL 背景增强 |
+| [master](https://github.com/Memsetqwq/Organization-Blog/tree/master) | 主分支 | 包含所有版本的最新整合 |
+
+### 各版本特性对比
+
+| 特性 | v0.1 | v0.2 | v0.3 |
+|-----|------|------|------|
+| 布局 | 三栏布局 | 全屏分栏 | 全屏分栏 |
+| 动画 | Shader 背景 | 滚动渐入动画 | 滚动渐入动画 |
+| 主题 | 深色/浅色手动切换 | 仅暗色 | 系统级明暗自适应 |
+| 导航 | 顶部固定栏 | 毛玻璃导航栏 | 毛玻璃导航栏 |
+| 图片 | 外部引用 | 外部引用 | 外部引用 |
+| 二维码 | ❌ | ✅ | ✅ |
+
+---
+
 ## 项目结构
 
 ```
 Organization-Blog/
-├── 社团图标.jpg          # 社团标志
-├── 初版示例.html         # 官网首页
-└── README.md            # 项目说明文档
+├── 社团图标.jpg                    # 社团标志
+├── 社团微信公众号二维码.png           # 微信公众号二维码
+├── 初版示例.html                    # Version_0.1 - 经典三栏版
+├── v2.html                         # Version_0.2 - 全屏沉浸版
+├── v3.html                         # Version_0.3 - 精致优化版
+├── README.md                       # 项目总览文档
+└── docs/
+    ├── README_v0.1.md             # Version_0.1 详细文档
+    ├── README_v0.2.md             # Version_0.2 详细文档
+    └── README_v0.3.md             # Version_0.3 详细文档
 ```
+
+---
 
 ## 本地运行
 
 ```bash
-# 直接用浏览器打开
-open 初版示例.html
+# 直接用浏览器打开任意版本
+open 初版示例.html      # v0.1
+open v2.html           # v0.2
+open v3.html           # v0.3
 
 # 或使用 Python 简易服务器
 python -m http.server 8080
 # 然后访问 http://localhost:8080
 ```
 
+---
+
 ## 贡献指南
 
 欢迎提交 Issue 和 Pull Request！
+
+### 提交规范
+
+- `feat:` 新功能
+- `fix:` 问题修复
+- `docs:` 文档更新
+- `style:` 代码格式调整
+- `refactor:` 重构
+
+---
 
 ## 许可证
 
