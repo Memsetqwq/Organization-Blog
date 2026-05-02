@@ -10,10 +10,6 @@
 
 <p align="center">
   <a href="mailto:opensource@kecheng.edu.cn">联系我们</a>
-  ·
-  <a href="https://github.com/kecheng-opensource" target="_blank">GitHub</a>
-  ·
-  <a href="https://github.com/Memsetqwq/Organization-Blog" target="_blank">项目仓库</a>
 </p>
 
 ---
@@ -132,12 +128,6 @@ python -m http.server 8080
 
 ---
 
-## 许可证
-
-本项目采用 [MIT License](LICENSE)。
-
----
-
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/Memsetqwq">Memsetqwq</a>
+  Made with ❤️
 </p>
