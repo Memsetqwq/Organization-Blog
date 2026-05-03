@@ -62,18 +62,19 @@
 | [Version_0.1](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.1) | 经典三栏版 | 经典三栏布局，Shader 背景动画，支持深色/浅色主题切换 |
 | [Version_0.2](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.2) | 全屏沉浸版 | 全屏沉浸式设计，滚动动画，现代化卡片布局 |
 | [Version_0.3](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.3) | 精致优化版 | 基于 v2 优化，添加系统级明暗主题，WebGL 背景增强 |
+| [Version_0.4](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.4) | 动画主题版 | 升级太阳/月亮切换按钮，星星闪烁与云层飘动动画 |
 | [main](https://github.com/Memsetqwq/Organization-Blog/tree/main) | 主分支 | 包含所有版本的最新整合 |
 
 ### 各版本特性对比
 
-| 特性 | v0.1 | v0.2 | v0.3 |
-|-----|------|------|------|
-| 布局 | 三栏布局 | 全屏分栏 | 全屏分栏 |
-| 动画 | Shader 背景 | 滚动渐入动画 | 滚动渐入动画 |
-| 主题 | 深色/浅色手动切换 | 仅暗色 | 系统级明暗自适应 |
-| 导航 | 顶部固定栏 | 毛玻璃导航栏 | 毛玻璃导航栏 |
-| 图片 | 外部引用 | 外部引用 | 外部引用 |
-| 二维码 | ❌ | ✅ | ✅ |
+| 特性 | v0.1 | v0.2 | v0.3 | v0.4 |
+|-----|------|------|------|------|
+| 布局 | 三栏布局 | 全屏分栏 | 全屏分栏 | 全屏分栏 |
+| 动画 | Shader 背景 | 滚动渐入动画 | 滚动渐入动画 | 滚动渐入 + 主题切换动画 |
+| 主题 | 深色/浅色手动切换 | 仅暗色 | 系统级明暗自适应 | 系统级明暗自适应 + 太阳/月亮按钮 |
+| 导航 | 顶部固定栏 | 毛玻璃导航栏 | 毛玻璃导航栏 | 毛玻璃导航栏 |
+| 图片 | 外部引用 | 外部引用 | 外部引用 | 外部引用 |
+| 二维码 | ❌ | ✅ | ✅ | ✅ |
 
 ---
 
@@ -86,6 +87,7 @@ Organization-Blog/
 ├── 初版示例.html                    # Version_0.1 - 经典三栏版
 ├── v2.html                         # Version_0.2 - 全屏沉浸版
 ├── v3.html                         # Version_0.3 - 精致优化版
+├── v4.html                         # Version_0.4 - 动画主题版
 ├── README.md                       # 项目总览文档
 └── docs/
     ├── README_v0.1.md             # Version_0.1 详细文档
@@ -102,6 +104,7 @@ Organization-Blog/
 open 初版示例.html      # v0.1
 open v2.html           # v0.2
 open v3.html           # v0.3
+open v4.html           # v0.4
 
 # 或使用 Python 简易服务器
 python -m http.server 8080
