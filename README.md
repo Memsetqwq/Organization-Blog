@@ -62,7 +62,7 @@
 | [Version_0.1](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.1) | 经典三栏版 | 经典三栏布局，Shader 背景动画，支持深色/浅色主题切换 |
 | [Version_0.2](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.2) | 全屏沉浸版 | 全屏沉浸式设计，滚动动画，现代化卡片布局 |
 | [Version_0.3](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.3) | 精致优化版 | 基于 v2 优化，添加系统级明暗主题，WebGL 背景增强 |
-| [Version_0.4](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.4) | 动画主题版 | 升级太阳/月亮切换按钮，星星闪烁与云层飘动动画 |
+| [Version_0.4](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.4) | 动画主题版 | 太阳/月亮切换按钮，响应式亮暗主题，米白/深蓝配色 |
 | [main](https://github.com/Memsetqwq/Organization-Blog/tree/main) | 主分支 | 包含所有版本的最新整合 |
 
 ### 各版本特性对比
@@ -71,9 +71,11 @@
 |-----|------|------|------|------|
 | 布局 | 三栏布局 | 全屏分栏 | 全屏分栏 | 全屏分栏 |
 | 动画 | Shader 背景 | 滚动渐入动画 | 滚动渐入动画 | 滚动渐入 + 主题切换动画 |
-| 主题 | 深色/浅色手动切换 | 仅暗色 | 系统级明暗自适应 | 系统级明暗自适应 + 太阳/月亮按钮 |
+| 主题 | 手动切换 | 仅暗色 | 系统级自适应 | 响应式亮暗 + 太阳/月亮按钮 |
+| 亮色配色 | - | - | - | 米白背景 + 翠绿强调 |
+| 暗色配色 | - | - | 深蓝灰 | 深蓝背景 + 荧光绿强调 |
 | 导航 | 顶部固定栏 | 毛玻璃导航栏 | 毛玻璃导航栏 | 毛玻璃导航栏 |
-| 图片 | 外部引用 | 外部引用 | 外部引用 | 外部引用 |
+| 持久化 | ❌ | ❌ | ❌ | ✅ localStorage |
 | 二维码 | ❌ | ✅ | ✅ | ✅ |
 
 ---
@@ -92,7 +94,8 @@ Organization-Blog/
 └── docs/
     ├── README_v0.1.md             # Version_0.1 详细文档
     ├── README_v0.2.md             # Version_0.2 详细文档
-    └── README_v0.3.md             # Version_0.3 详细文档
+    ├── README_v0.3.md             # Version_0.3 详细文档
+    └── README_v0.4.md             # Version_0.4 详细文档
 ```
 
 ---
