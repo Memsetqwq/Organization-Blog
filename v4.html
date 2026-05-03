@@ -28,7 +28,6 @@
   --hero-mask:linear-gradient(to bottom, rgba(245,245,247,0) 0%, rgba(245,245,247,0.3) 60%, rgba(245,245,247,1) 100%);
 }
 
-/* System default: auto-detect */
 @media(prefers-color-scheme:light){
   :root:not([data-theme="dark"]){--bg:#f5f5f7;--bg-2:#fff;--bg-3:#f0f0f0;--bg-nav:rgba(245,245,247,.85);--text:#1d1d1f;--text-2:#6e6e73;--border:rgba(0,0,0,.08);--shadow:rgba(0,0,0,.1);--hero-mask:linear-gradient(to bottom, rgba(245,245,247,0) 0%, rgba(245,245,247,0.3) 60%, rgba(245,245,247,1) 100%);}
 }
@@ -48,116 +47,203 @@ body{
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
 .d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.5s}
 
-/* ===== THEME TOGGLE BUTTON v4.0 ===== */
-.theme-toggle-wrap{position:relative;width:64px;height:32px;flex-shrink:0}
-.theme-toggle{
-  width:100%;height:100%;border-radius:32px;border:none;cursor:pointer;
-  position:relative;overflow:hidden;
-  background:linear-gradient(135deg,#1a2a6c,#2d8a6e);
-  box-shadow:inset 0 2px 8px rgba(0,0,0,.3),0 2px 6px rgba(0,0,0,.2);
-  transition:background .6s cubic-bezier(.22,1,.36,1),box-shadow .4s ease;
-}
-.theme-toggle:hover{box-shadow:inset 0 2px 8px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.3);transform:scale(1.05)}
-.theme-toggle:active{transform:scale(.95)}
-
-/* Sun/Moon orb */
-.toggle-orb{
-  position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;
-  background:linear-gradient(135deg,#ffd700,#ffaa00);
-  box-shadow:0 0 12px rgba(255,215,0,.5),inset -2px -2px 6px rgba(0,0,0,.1);
-  transition:all .6s cubic-bezier(.22,1,.36,1);
-  z-index:3;
-}
-.theme-toggle.night .toggle-orb{
-  left:35px;
-  background:linear-gradient(135deg,#e8e8e8,#c0c0c0);
-  box-shadow:0 0 12px rgba(200,200,200,.4),inset -2px -2px 6px rgba(0,0,0,.15);
+/* ===== THEME TOGGLE BUTTON v4.0 (Refactored) ===== */
+.theme-toggle-host{
+  display:inline-block;
+  vertical-align:middle;
+  font-size:1.6px;
+  width:180em;
+  height:70em;
+  position:relative;
+  flex-shrink:0;
 }
 
-/* Sun rays */
-.toggle-orb::before{
-  content:'';position:absolute;top:50%;left:50%;width:200%;height:200%;
-  transform:translate(-50%,-50%) rotate(0deg);
-  background:conic-gradient(
-    transparent 0deg,transparent 20deg,
-    rgba(255,215,0,.25) 22deg,rgba(255,215,0,.25) 28deg,
-    transparent 30deg,transparent 50deg,
-    rgba(255,215,0,.25) 52deg,rgba(255,215,0,.25) 58deg,
-    transparent 60deg,transparent 80deg,
-    rgba(255,215,0,.25) 82deg,rgba(255,215,0,.25) 88deg,
-    transparent 90deg,transparent 110deg,
-    rgba(255,215,0,.25) 112deg,rgba(255,215,0,.25) 118deg,
-    transparent 120deg,transparent 140deg,
-    rgba(255,215,0,.25) 142deg,rgba(255,215,0,.25) 148deg,
-    transparent 150deg,transparent 170deg,
-    rgba(255,215,0,.25) 172deg,rgba(255,215,0,.25) 178deg,
-    transparent 180deg,transparent 200deg,
-    rgba(255,215,0,.25) 202deg,rgba(255,215,0,.25) 208deg,
-    transparent 210deg,transparent 230deg,
-    rgba(255,215,0,.25) 232deg,rgba(255,215,0,.25) 238deg,
-    transparent 240deg,transparent 260deg,
-    rgba(255,215,0,.25) 262deg,rgba(255,215,0,.25) 268deg,
-    transparent 270deg,transparent 290deg,
-    rgba(255,215,0,.25) 292deg,rgba(255,215,0,.25) 298deg,
-    transparent 300deg,transparent 320deg,
-    rgba(255,215,0,.25) 322deg,rgba(255,215,0,.25) 328deg,
-    transparent 330deg,transparent 350deg,
-    rgba(255,215,0,.25) 352deg,rgba(255,215,0,.25) 358deg,
-    transparent 360deg
-  );
-  opacity:1;transition:opacity .5s ease;
-  animation:rayRotate 12s linear infinite;
+.theme-toggle-components{
+  position:absolute;
+  inset:0;
+  background-color:rgba(70,133,192,1);
+  border-radius:100em;
+  box-shadow:inset 0 0 5em 3em rgba(0,0,0,.5);
+  overflow:hidden;
+  cursor:pointer;
+  transition:background-color .7s cubic-bezier(0,.5,1,1);
 }
-.theme-toggle.night .toggle-orb::before{opacity:0}
-@keyframes rayRotate{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
-/* Moon crater */
-.toggle-orb::after{
-  content:'';position:absolute;top:6px;left:5px;width:6px;height:6px;
-  border-radius:50%;background:rgba(150,150,150,.25);
-  box-shadow:8px 4px 0 -1px rgba(150,150,150,.2),3px 10px 0 -2px rgba(150,150,150,.15);
-  opacity:0;transition:opacity .5s ease;
+/* Main sun/moon orb */
+.theme-toggle-main{
+  position:absolute;
+  top:7.5em;left:7.5em;
+  width:55em;height:55em;
+  background-color:rgba(255,195,35,1);
+  border-radius:50%;
+  box-shadow:3em 3em 5em rgba(0,0,0,.5),
+    inset -3em -5em 3em -3em rgba(0,0,0,.5),
+    inset 4em 5em 2em -2em rgba(255,230,80,1);
+  transition:transform 1s cubic-bezier(.56,1.35,.52,1),
+    background-color 1s cubic-bezier(.56,1.35,.52,1),
+    box-shadow 1s cubic-bezier(.56,1.35,.52,1);
+  z-index:2;
 }
-.theme-toggle.night .toggle-orb::after{opacity:1}
 
-/* Stars */
-.stars{position:absolute;inset:0;pointer-events:none;z-index:2}
-.star{
-  position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;
-  opacity:0;transition:opacity .5s ease;
-  box-shadow:0 0 4px rgba(255,255,255,.8);
+/* Moon craters */
+.theme-toggle-moon{
+  position:absolute;
+  background-color:rgba(150,160,180,1);
+  box-shadow:inset 0 0 1em 1em rgba(0,0,0,.3);
+  border-radius:50%;
+  transition:opacity .5s;
+  opacity:0;
 }
-.star.s1{top:6px;left:12px;animation:twinkle 2s ease-in-out infinite}
-.star.s2{top:10px;left:22px;animation:twinkle 2.5s ease-in-out .5s infinite}
-.star.s3{top:18px;left:8px;animation:twinkle 3s ease-in-out 1s infinite}
-.star.s4{top:22px;left:18px;width:1.5px;height:1.5px;animation:twinkle 2.2s ease-in-out .3s infinite}
-.star.s5{top:8px;left:30px;width:1px;height:1px;animation:twinkle 2.8s ease-in-out .7s infinite}
-.theme-toggle.night .star{opacity:1}
-@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+.theme-toggle-moon:nth-child(1){top:7.5em;left:25em;width:12.5em;height:12.5em}
+.theme-toggle-moon:nth-child(2){top:20em;left:7.5em;width:20em;height:20em}
+.theme-toggle-moon:nth-child(3){top:32.5em;left:32.5em;width:12.5em;height:12.5em}
+
+/* Daytime background circles */
+.theme-toggle-bg-circle{
+  position:absolute;
+  border-radius:50%;
+  transition:transform 1s cubic-bezier(.56,1.35,.52,1);
+  z-index:0;
+}
+.theme-toggle-bg-circle:nth-child(1){
+  top:-20em;left:-20em;width:110em;height:110em;
+  background-color:rgba(255,255,255,.2);
+}
+.theme-toggle-bg-circle:nth-child(2){
+  top:-32.5em;left:-17.5em;width:135em;height:135em;
+  background-color:rgba(255,255,255,.1);
+}
+.theme-toggle-bg-circle:nth-child(3){
+  top:-45em;left:-15em;width:160em;height:160em;
+  background-color:rgba(255,255,255,.05);
+}
 
 /* Clouds */
-.clouds{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
-.cloud{
-  position:absolute;background:rgba(255,255,255,.15);border-radius:20px;
-  opacity:0;transition:opacity .6s ease,transform .6s ease;
+.theme-toggle-cloud,.theme-toggle-cloud-light{
+  position:absolute;
+  transition:transform 1s cubic-bezier(.56,1.35,.52,1);
+  transform:translateY(10em);
 }
-.cloud::before,.cloud::after{
-  content:'';position:absolute;background:rgba(255,255,255,.15);border-radius:50%;
+.theme-toggle-cloud{z-index:1}
+.theme-toggle-cloud-light{
+  right:0;bottom:25em;opacity:.5;z-index:0;
 }
-.cloud.c1{width:18px;height:6px;top:20px;left:8px}
-.cloud.c1::before{width:8px;height:8px;top:-4px;left:2px}
-.cloud.c1::after{width:6px;height:6px;top:-3px;left:8px}
-.cloud.c2{width:14px;height:5px;top:24px;left:28px}
-.cloud.c2::before{width:6px;height:6px;top:-3px;left:2px}
-.cloud.c2::after{width:5px;height:5px;top:-2px;left:6px}
-.theme-toggle:not(.night) .cloud{opacity:1;animation:cloudFloat 8s ease-in-out infinite}
-.cloud.c2{animation-delay:-4s}
-@keyframes cloudFloat{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
 
-/* Night sky background */
-.theme-toggle.night{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)}
+.theme-toggle-cloud-son{
+  position:absolute;
+  background-color:#fff;
+  border-radius:50%;
+  transition:transform 6s,right 1s,bottom 1s;
+}
+.theme-toggle-cloud-son:nth-child(6n+1){right:-20em;bottom:10em;width:50em;height:50em}
+.theme-toggle-cloud-son:nth-child(6n+2){right:-10em;bottom:-25em;width:60em;height:60em}
+.theme-toggle-cloud-son:nth-child(6n+3){right:20em;bottom:-40em;width:60em;height:60em}
+.theme-toggle-cloud-son:nth-child(6n+4){right:50em;bottom:-35em;width:60em;height:60em}
+.theme-toggle-cloud-son:nth-child(6n+5){right:75em;bottom:-60em;width:75em;height:75em}
+.theme-toggle-cloud-son:nth-child(6n+6){right:110em;bottom:-50em;width:60em;height:60em}
 
-/* ===== NAV (Huawei style: clean, airy) ===== */
+/* Stars */
+.theme-toggle-stars{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  transform:translateY(-125em);
+  opacity:0;
+  transition:transform 1s cubic-bezier(.56,1.35,.52,1),opacity 1s;
+}
+
+.theme-toggle-star{
+  position:absolute;
+  transition:transform 1s cubic-bezier(.56,1.35,.52,1),top 1s,left 1s;
+}
+.theme-toggle-star.big{--size:7.5em;width:calc(2*var(--size));height:calc(2*var(--size))}
+.theme-toggle-star.medium{--size:5em;width:calc(2*var(--size));height:calc(2*var(--size))}
+.theme-toggle-star.small{--size:3em;width:calc(2*var(--size));height:calc(2*var(--size))}
+
+.theme-toggle-star:nth-child(1){top:11em;left:39em;animation:starTwinkle 3.5s infinite alternate linear}
+.theme-toggle-star:nth-child(2){top:39em;left:91em;animation:starTwinkle 4.1s infinite alternate linear}
+.theme-toggle-star:nth-child(3){top:26em;left:19em;animation:starTwinkle 4.9s infinite alternate linear}
+.theme-toggle-star:nth-child(4){top:37em;left:66em;animation:starTwinkle 5.3s infinite alternate linear}
+.theme-toggle-star:nth-child(5){top:21em;left:75em;animation:starTwinkle 3s infinite alternate linear}
+.theme-toggle-star:nth-child(6){top:51em;left:38em;animation:starTwinkle 2.2s infinite alternate linear}
+
+@keyframes starTwinkle{0%,20%{transform:scale(0)}20%,100%{transform:scale(1)}}
+
+.theme-toggle-star-son{
+  float:left;
+  width:var(--size);height:var(--size);
+}
+.theme-toggle-star-son:nth-child(1){background-image:radial-gradient(circle var(--size) at left 0,transparent var(--size),#fff)}
+.theme-toggle-star-son:nth-child(2){background-image:radial-gradient(circle var(--size) at right 0,transparent var(--size),#fff)}
+.theme-toggle-star-son:nth-child(3){background-image:radial-gradient(circle var(--size) at 0 bottom,transparent var(--size),#fff)}
+.theme-toggle-star-son:nth-child(4){background-image:radial-gradient(circle var(--size) at right bottom,transparent var(--size),#fff)}
+
+/* ===== DARK STATE ===== */
+.theme-toggle-host.dark .theme-toggle-components{
+  background-color:rgba(25,30,50,1);
+}
+.theme-toggle-host.dark .theme-toggle-main{
+  transform:translateX(110em);
+  background-color:rgba(195,200,210,1);
+  box-shadow:3em 3em 5em rgba(0,0,0,.5),
+    inset -3em -5em 3em -3em rgba(0,0,0,.5),
+    inset 4em 5em 2em -2em rgba(255,255,210,1);
+}
+.theme-toggle-host.dark .theme-toggle-moon{opacity:1}
+.theme-toggle-host.dark .theme-toggle-bg-circle:nth-child(1){transform:translateX(110em)}
+.theme-toggle-host.dark .theme-toggle-bg-circle:nth-child(2){transform:translateX(80em)}
+.theme-toggle-host.dark .theme-toggle-bg-circle:nth-child(3){transform:translateX(50em)}
+.theme-toggle-host.dark .theme-toggle-cloud,
+.theme-toggle-host.dark .theme-toggle-cloud-light{transform:translateY(80em)}
+.theme-toggle-host.dark .theme-toggle-stars{
+  transform:translateY(-62.5em);
+  opacity:1;
+}
+
+/* ===== HOVER PREVIEW (not clicked) ===== */
+.theme-toggle-host:not(.clicked):hover .theme-toggle-main{
+  transform:translateX(10em);
+}
+.theme-toggle-host:not(.clicked):hover .theme-toggle-bg-circle:nth-child(1){transform:translateX(10em)}
+.theme-toggle-host:not(.clicked):hover .theme-toggle-bg-circle:nth-child(2){transform:translateX(7em)}
+.theme-toggle-host:not(.clicked):hover .theme-toggle-bg-circle:nth-child(3){transform:translateX(4em)}
+
+.theme-toggle-host:not(.clicked):hover .theme-toggle-cloud-son:nth-child(6n+1){right:-24em;bottom:10em}
+.theme-toggle-host:not(.clicked):hover .theme-toggle-cloud-son:nth-child(6n+2){right:-12em;bottom:-27em}
+.theme-toggle-host:not(.clicked):hover .theme-toggle-cloud-son:nth-child(6n+3){right:17em;bottom:-43em}
+.theme-toggle-host:not(.clicked):hover .theme-toggle-cloud-son:nth-child(6n+4){right:46em;bottom:-39em}
+.theme-toggle-host:not(.clicked):hover .theme-toggle-cloud-son:nth-child(6n+5){right:70em;bottom:-65em}
+.theme-toggle-host:not(.clicked):hover .theme-toggle-cloud-son:nth-child(6n+6){right:109em;bottom:-54em}
+
+/* Dark hover preview */
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-main{transform:translateX(100em)}
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-bg-circle:nth-child(1){transform:translateX(100em)}
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-bg-circle:nth-child(2){transform:translateX(73em)}
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-bg-circle:nth-child(3){transform:translateX(46em)}
+
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-star:nth-child(1){top:10em;left:36em}
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-star:nth-child(2){top:40em;left:87em}
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-star:nth-child(3){top:26em;left:16em}
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-star:nth-child(4){top:38em;left:63em}
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-star:nth-child(5){top:20.5em;left:72em}
+.theme-toggle-host.dark:not(.clicked):hover .theme-toggle-star:nth-child(6){top:51.5em;left:35em}
+
+/* ===== LANG BUTTON (Unified style) ===== */
+.lang-btn{
+  background:none;border:1.5px solid var(--border);color:var(--text-2);
+  font-size:11.5px;padding:6px 16px;cursor:pointer;transition:all .3s;
+  font-family:inherit;letter-spacing:.04em;border-radius:100px;
+  backdrop-filter:blur(4px);
+}
+.lang-btn:hover{
+  border-color:rgba(128,128,128,.5);
+  color:var(--text);
+  background:rgba(128,128,128,.08);
+  transform:translateY(-1px);
+}
+.lang-btn:active{transform:scale(.95)}
+
+/* ===== NAV ===== */
 .nav{
   position:fixed;top:0;left:0;right:0;height:56px;z-index:1000;
   display:flex;align-items:center;justify-content:space-between;
@@ -184,22 +270,14 @@ body{
 .nav .links a.active::after{width:100%}
 
 .nav .ctrl{display:flex;gap:14px;align-items:center}
-.nav .ctrl button{
-  background:none;border:1px solid var(--border);color:var(--text-2);
-  font-size:11.5px;padding:6px 14px;cursor:pointer;transition:all .25s;
-  font-family:inherit;letter-spacing:.04em;border-radius:4px;
-}
-.nav .ctrl button:hover{border-color:rgba(128,128,128,.4);color:var(--text)}
 
-/* ===== HERO (Full-page immersive with transition) ===== */
+/* ===== HERO ===== */
 .hero{
   height:100dvh;display:flex;flex-direction:column;
   justify-content:center;align-items:center;text-align:center;
   position:relative;overflow:hidden;
 }
-/* WebGL canvas covers hero only */
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-/* Gradient transition overlay at bottom of hero */
 .hero::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:35vh;
   background:var(--hero-mask);z-index:1;pointer-events:none;
@@ -207,7 +285,6 @@ body{
 }
 .hero .content{position:relative;z-index:2;max-width:760px;padding:0 28px}
 
-/* Huawei launch style typography */
 .hero h1{
   font-size:clamp(38px,6.5vw,76px);
   font-weight:600;letter-spacing:-.02em;
@@ -271,7 +348,7 @@ body{
   letter-spacing:.05em;border-radius:4px;
 }
 
-/* EVENTS (Hypergryph style) */
+/* EVENTS */
 .events{padding:0;max-width:none}
 .event-row{display:flex;min-height:520px;border-top:1px solid var(--border);overflow:hidden}
 .event-row:nth-child(even){flex-direction:row-reverse}
@@ -411,21 +488,22 @@ body{
   .event-info{padding:36px 24px}
   .hero h1{font-size:34px}
   .nav{padding:0 20px}
+  .theme-toggle-host{font-size:1.2px}
 }
 @media(max-width:480px){
   .hero h1{font-size:30px}
   .member-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;text-align:center}
   .modal-box{padding:28px 20px}
+  .theme-toggle-host{font-size:1px}
 }
 
 /* Reduced motion */
 @media(prefers-reduced-motion:reduce){
   .an{opacity:1;transform:none;transition:none}
   .hero .scroll{animation:none}
-  .toggle-orb::before{animation:none}
-  .star{animation:none}
-  .cloud{animation:none}
+  .theme-toggle-main,.theme-toggle-bg-circle,.theme-toggle-cloud,.theme-toggle-cloud-light,.theme-toggle-stars{transition:none}
+  .theme-toggle-star{animation:none}
 }
 </style>
 </head>
@@ -446,23 +524,79 @@ body{
     <a href="#members" data-nav="members">核心成员</a>
   </div>
   <div class="ctrl">
-    <div class="theme-toggle-wrap" title="切换主题">
-      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="切换明暗主题">
-        <div class="clouds">
-          <div class="cloud c1"></div>
-          <div class="cloud c2"></div>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle-host" id="themeToggleHost" title="切换主题">
+      <div class="theme-toggle-components" id="themeToggleBtn" onclick="handleThemeClick()">
+        <!-- Background circles -->
+        <div class="theme-toggle-bg-circle"></div>
+        <div class="theme-toggle-bg-circle"></div>
+        <div class="theme-toggle-bg-circle"></div>
+        <!-- Main orb with moon craters -->
+        <div class="theme-toggle-main">
+          <div class="theme-toggle-moon"></div>
+          <div class="theme-toggle-moon"></div>
+          <div class="theme-toggle-moon"></div>
         </div>
-        <div class="stars">
-          <div class="star s1"></div>
-          <div class="star s2"></div>
-          <div class="star s3"></div>
-          <div class="star s4"></div>
-          <div class="star s5"></div>
+        <!-- Clouds -->
+        <div class="theme-toggle-cloud">
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
         </div>
-        <div class="toggle-orb"></div>
-      </button>
+        <div class="theme-toggle-cloud-light">
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+          <div class="theme-toggle-cloud-son"></div>
+        </div>
+        <!-- Stars -->
+        <div class="theme-toggle-stars">
+          <div class="theme-toggle-star big">
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+          </div>
+          <div class="theme-toggle-star big">
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+          </div>
+          <div class="theme-toggle-star medium">
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+          </div>
+          <div class="theme-toggle-star medium">
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+          </div>
+          <div class="theme-toggle-star small">
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+          </div>
+          <div class="theme-toggle-star small">
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+            <div class="theme-toggle-star-son"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button onclick="toggleLang()" id="langBtn">EN</button>
+    <!-- Language Button -->
+    <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
   </div>
 </nav>
 
@@ -719,27 +853,58 @@ body{
 <script>
 /* ===== THEME: Auto-detect system, manual toggle ===== */
 let theme='dark';
+let isThemeMoved=false;
+let isThemeClicked=false;
+
 function initTheme(){
   const sysDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
   theme=sysDark?'dark':'light';
-  document.body.setAttribute('data-theme',theme);
-  const btn=document.getElementById('themeBtn');
-  if(btn) btn.classList.toggle('night',theme==='dark');
+  applyTheme(theme,true);
 }
-function toggleTheme(){
-  theme=theme==='dark'?'light':'dark';
+
+function applyTheme(newTheme,isInit){
+  theme=newTheme;
+  document.body.setAttribute('data-theme',theme);
+  const host=document.getElementById('themeToggleHost');
+  if(!host)return;
+  if(theme==='dark'){
+    host.classList.add('dark');
+  }else{
+    host.classList.remove('dark');
+  }
+  isThemeMoved=(theme==='dark');
+}
+
+function handleThemeClick(){
+  if(isThemeClicked)return;
+  isThemeClicked=true;
+  setTimeout(()=>{isThemeClicked=false},500);
+
+  const newTheme=theme==='dark'?'light':'dark';
+  theme=newTheme;
   document.body.setAttribute('data-theme',theme);
   document.body.setAttribute('data-theme-manual','true');
-  const btn=document.getElementById('themeBtn');
-  if(btn) btn.classList.toggle('night',theme==='dark');
+
+  const host=document.getElementById('themeToggleHost');
+  if(!host)return;
+
+  if(theme==='dark'){
+    host.classList.add('dark');
+    isThemeMoved=true;
+  }else{
+    host.classList.remove('dark');
+    isThemeMoved=false;
+  }
 }
+
 initTheme();
+
+// System theme change listener
 window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',e=>{
-  if(!document.body.hasAttribute('data-theme-manual')){
-    theme=e.matches?'dark':'light';
-    document.body.setAttribute('data-theme',theme);
-    const btn=document.getElementById('themeBtn');
-    if(btn) btn.classList.toggle('night',theme==='dark');
+  if(document.body.hasAttribute('data-theme-manual'))return;
+  const newTheme=e.matches?'dark':'light';
+  if(newTheme!==theme){
+    applyTheme(newTheme,false);
   }
 });
 
