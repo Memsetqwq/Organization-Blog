@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科成开放原子开源社团</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-warm-white:#ECE8E1;
+  --text-charcoal:#2A2520;
+  --text-grey:#8A8580;
+  --accent-teal:#1A2E2A;
+  --border-light:#C8C0B5;
+  --bg-warm-white-rgb:236,232,225;
+  --text-charcoal-rgb:42,37,32;
+  --shader-color:0.10,0.18,0.16;
+}
+[data-theme="dark"]{
+  --bg-warm-white:#1A1A1A;
+  --text-charcoal:#E0DCD6;
+  --text-grey:#8A8580;
+  --accent-teal:#C8C0B5;
+  --border-light:#3A3A3A;
+  --bg-warm-white-rgb:26,26,26;
+  --text-charcoal-rgb:224,220,214;
+  --shader-color:0.78,0.74,0.68;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background-color:var(--bg-warm-white);
+  color:var(--text-charcoal);
+  transition:background-color .3s,color .3s;
+  overflow:hidden;height:100vh;
+}
+.top-bar{
+  position:fixed;top:0;left:0;right:0;height:40px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;z-index:50;
+  background-color:var(--bg-warm-white);
+  border-bottom:1px solid var(--border-light);
+  transition:background-color .3s,border-color .3s;
+}
+.top-bar span{font-size:12px;font-weight:400;letter-spacing:.05em;text-transform:uppercase;color:var(--text-charcoal)}
+.top-bar .controls{display:flex;align-items:center;gap:16px}
+.top-bar button{
+  background:none;border:none;cursor:pointer;
+  font-size:12px;font-family:'Space Mono',monospace;color:var(--text-charcoal);letter-spacing:.02em;
+}
+.layout{display:flex;height:100vh;padding-top:40px}
+
+/* Left Column */
+.left-col{
+  width:21%;min-width:240px;border-right:1px solid var(--border-light);
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.left-col .shader-bg{position:absolute;inset:0;z-index:0}
+.left-col .content{
+  position:relative;z-index:10;padding:24px;height:100%;
+  display:flex;flex-direction:column;color:#fff;mix-blend-mode:difference;
+}
+.left-col h2{
+  font-size:12px;font-weight:400;letter-spacing:.05em;text-transform:uppercase;
+  margin-bottom:16px;line-height:1.4;
+}
+.left-col a{
+  font-size:12px;color:#fff;text-decoration:underline;text-underline-offset:3px;
+  display:block;line-height:1.6;transition:opacity .2s;
+}
+.left-col a:hover{opacity:.6}
+.left-col .bio{
+  font-size:12px;line-height:1.8;max-width:240px;text-align:justify;margin-top:16px;
+}
+.left-col .footer{margin-top:auto;padding-bottom:24px}
+.left-col .footer a,.left-col .footer button{
+  font-size:12px;font-weight:400;letter-spacing:.05em;text-transform:uppercase;
+  color:#fff;background:none;border:none;cursor:pointer;padding:0;
+  text-decoration:none;transition:opacity .2s;display:block;line-height:2;
+}
+.left-col .footer a:hover,.left-col .footer button:hover{opacity:.6}
+
+/* Middle Column */
+.mid-col{
+  flex:1;border-right:1px solid var(--border-light);
+  overflow-y:auto;height:calc(100vh - 40px);scroll-behavior:smooth;
+}
+.mid-col .inner{padding:24px 24px 80px}
+.mid-col h2{
+  font-size:12px;font-weight:400;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--text-grey);margin-bottom:32px;line-height:1.4;
+}
+.post-item{
+  margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border-light);
+  transition:opacity .2s;
+}
+.post-item:hover{opacity:.85}
+.post-item .img-wrap{
+  border:1px solid var(--border-light);overflow:hidden;margin-bottom:12px;
+}
+.post-item img{
+  width:100%;height:auto;display:block;transition:all .3s;
+}
+.post-item:hover img{filter:grayscale(100%) brightness(.9);transform:scale(1.02)}
+.post-item h3{font-size:15px;font-weight:400;line-height:1.4;color:var(--text-charcoal);margin-bottom:2px}
+.post-item .subtitle{font-size:12px;color:var(--text-grey);line-height:1.5;margin-bottom:4px}
+.post-item .meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-grey)}
+.post-item a.read-more{
+  display:inline-block;margin-top:8px;font-size:11px;font-family:'Space Mono',monospace;
+  color:var(--text-grey);text-decoration:underline;text-underline-offset:3px;transition:opacity .2s;
+}
+.post-item a.read-more:hover{opacity:.6}
+
+/* Right Column */
+.right-col{
+  width:25%;min-width:280px;overflow-y:auto;height:calc(100vh - 40px);flex-shrink:0;
+}
+.right-col .inner{padding:24px 24px 80px}
+.right-col h2{
+  font-size:12px;font-weight:400;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--text-grey);margin-bottom:48px;line-height:1.4;
+}
+.avatar-wrap{
+  border:1px solid var(--border-light);box-shadow:0 4px 15px rgba(0,0,0,.08);
+  overflow:hidden;aspect-ratio:1/1;width:100%;margin-bottom:40px;
+}
+.avatar-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.cv-section{border-bottom:1px solid var(--border-light);padding-bottom:16px;margin-bottom:16px}
+.cv-row{display:flex;gap:16px;margin-bottom:16px}
+.cv-row:last-child{margin-bottom:0}
+.cv-label{
+  font-size:12px;font-weight:400;color:var(--text-charcoal);line-height:1.6;
+  flex-shrink:0;width:80px;
+}
+.cv-spacer{width:80px;flex-shrink:0}
+.cv-body{flex:1}
+.cv-body p{font-size:12px;line-height:1.6;color:var(--text-charcoal)}
+.cv-body p.sub{color:var(--text-grey)}
+.update-note{font-size:11px;color:var(--text-grey);margin-top:32px}
+
+/* Modal */
+.modal{
+  position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.5);
+  display:none;align-items:center;justify-content:center;
+}
+.modal.active{display:flex}
+.modal-box{
+  width:100%;max-width:420px;margin:0 16px;
+  background:#1A1A1A;border-radius:4px;padding:24px;
+}
+.modal-box h3{
+  font-size:14px;font-weight:400;letter-spacing:.05em;color:#fff;
+  text-align:center;margin-bottom:24px;
+}
+.modal-box label{font-size:11px;color:var(--text-grey);display:block;margin-bottom:6px}
+.modal-box input,.modal-box textarea{
+  width:100%;background:transparent;border:1px solid var(--text-grey);
+  border-radius:2px;padding:10px 12px;font-size:12px;color:#fff;
+  font-family:'Space Mono',monospace;outline:none;margin-bottom:12px;
+}
+.modal-box textarea{resize:vertical}
+.modal-box .btns{display:flex;gap:12px;margin-top:20px}
+.modal-box .btns button{
+  flex:1;padding:10px 16px;font-size:12px;font-family:'Space Mono',monospace;
+  border:none;border-radius:4px;cursor:pointer;
+}
+.modal-box .btns .cancel{background:rgba(255,255,255,.1);color:#fff}
+.modal-box .btns .submit{background:#fff;color:#1A1A1A}
+.modal-box .note{
+  text-align:center;margin-top:12px;font-size:11px;
+  color:rgba(255,255,255,.5);font-family:'Space Mono',monospace;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}
+
+/* Mobile */
+@media(max-width:900px){
+  .left-col{display:none}
+  .right-col{display:none}
+  .mid-col{border-right:none}
+}
+</style>
+</head>
+<body data-theme="light">
+
+<!-- Top Bar -->
+<header class="top-bar">
+  <span>科成开放原子开源社团</span>
+  <div class="controls">
+    <button onclick="toggleTheme()" id="themeBtn">DARK</button>
+    <button onclick="toggleLang()" id="langBtn">EN</button>
+  </div>
+</header>
+
+<!-- Layout -->
+<div class="layout">
+
+  <!-- Left Column -->
+  <aside class="left-col">
+    <canvas class="shader-bg" id="shaderCanvas"></canvas>
+    <div class="content">
+      <div>
+        <h2 data-i18n="aboutTitle">社团简介 (联系方式)</h2>
+        <a href="mailto:opensource@kecheng.edu.cn">opensource@kecheng.edu.cn</a>
+        <a href="https://github.com/kecheng-opensource" target="_blank" rel="noopener">GitHub</a>
+        <p class="bio" id="bioText">科成开放原子开源社团成立于2024年1月11日，是开放原子开源基金会联合腾讯公司共同出资发起、由电子科技大学成都学院支持建设的高校学生社团。社团以计算机技术和软件开发为主要领域，以推动开源事业为驱动力，致力于打造国内开源基础软件新生态。其口号为"因开放而精彩，因开源而未来"，明确将自身定位为连接校园与产业的开源人才培养基地。</p>
+      </div>
+      <div class="footer">
+        <button onclick="openJoinModal()" data-i18n="joinBtn">加入我们</button>
+        <a href="mailto:opensource@kecheng.edu.cn" data-i18n="contactBtn">联系方式</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Middle Column -->
+  <main class="mid-col" id="midCol">
+    <div class="inner">
+      <h2 data-i18n="newsTitle">社团动态 (活动)</h2>
+      <div id="postsContainer"></div>
+    </div>
+  </main>
+
+  <!-- Right Column -->
+  <aside class="right-col">
+    <div class="inner">
+      <h2 data-i18n="profileTitle">社团档案 (荣誉)</h2>
+      <div class="avatar-wrap">
+        <img src="./社团图标.jpg" alt="社团标志" loading="lazy">
+      </div>
+      <div id="cvContainer"></div>
+      <p class="update-note">Last Updated 2025.06</p>
+    </div>
+  </aside>
+
+</div>
+
+<!-- Join Modal -->
+<div class="modal" id="joinModal">
+  <div class="modal-box">
+    <h3 data-i18n="modalTitle">申请加入社团</h3>
+    <label data-i18n="nameLabel">你的名字</label>
+    <input type="text" id="joinName" placeholder="请输入姓名" data-i18n-placeholder="namePh">
+    <label data-i18n="msgLabel">自我介绍 / 申请理由</label>
+    <textarea rows="5" id="joinMsg" placeholder="请简单介绍你的技术背景、感兴趣的领域以及为什么想加入我们..." data-i18n-placeholder="msgPh"></textarea>
+    <div class="btns">
+      <button class="cancel" onclick="closeJoinModal()" data-i18n="cancelBtn">取消</button>
+      <button class="submit" onclick="submitJoin()" data-i18n="submitBtn">提交申请</button>
+    </div>
+    <p class="note" data-i18n="modalNote">申请将通过邮件发送</p>
+  </div>
+</div>
+
+<script>
+/* ========== I18N ========== */
+let lang='zh';
+const i18n={
+  zh:{
+    aboutTitle:'社团简介 (联系方式)',joinBtn:'加入我们',contactBtn:'联系方式',
+    newsTitle:'社团动态 (活动)',profileTitle:'社团档案 (荣誉)',
+    backBtn:'返回',closeBtn:'关闭',
+    modalTitle:'申请加入社团',nameLabel:'你的名字',namePh:'请输入姓名',
+    msgLabel:'自我介绍 / 申请理由',msgPh:'请简单介绍你的技术背景、感兴趣的领域以及为什么想加入我们...',
+    cancelBtn:'取消',submitBtn:'提交申请',modalNote:'申请将通过邮件发送',
+    bio:`科成开放原子开源社团成立于2024年1月11日，是开放原子开源基金会联合腾讯公司共同出资发起、由电子科技大学成都学院支持建设的高校学生社团。社团以计算机技术和软件开发为主要领域，以推动开源事业为驱动力，致力于打造国内开源基础软件新生态。其口号为"因开放而精彩，因开源而未来"，明确将自身定位为连接校园与产业的开源人才培养基地。`,
+    themeDark:'DARK',themeLight:'LIGHT',langSwitch:'EN',
+    readMore:'阅读原文 →'
+  },
+  en:{
+    aboutTitle:'ABOUT (CONTACT)',joinBtn:'JOIN US',contactBtn:'CONTACT',
+    newsTitle:'NEWS & EVENTS',profileTitle:'CLUB PROFILE',
+    backBtn:'BACK',closeBtn:'CLOSE',
+    modalTitle:'Apply to Join',nameLabel:'Your Name',namePh:'Enter your name',
+    msgLabel:'Self-introduction / Reason',msgPh:'Briefly introduce your background, interests, and why you want to join...',
+    cancelBtn:'Cancel',submitBtn:'Submit',modalNote:'Application will be sent via email',
+    bio:`Founded on January 11, 2024, the KC OpenAtom Open Source Club is a university student club jointly initiated by the OpenAtom Foundation and Tencent, with support from UESTC Chengdu College. Focusing on computer technology and software development, the club drives the open source movement and builds China's open source basic software ecosystem. Our motto: "Brilliant because of openness, future because of open source."`,
+    themeDark:'DARK',themeLight:'LIGHT',langSwitch:'中',
+    readMore:'Read article →'
+  }
+};
+
+function toggleLang(){
+  lang=lang==='zh'?'en':'zh';
+  document.getElementById('langBtn').textContent=i18n[lang].langSwitch;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(i18n[lang][key])el.textContent=i18n[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-placeholder');
+    if(i18n[lang][key])el.placeholder=i18n[lang][key];
+  });
+  document.getElementById('bioText').textContent=i18n[lang].bio;
+  renderPosts();renderCV();
+}
+
+/* ========== Theme ========== */
+function toggleTheme(){
+  const body=document.body;
+  const isDark=body.getAttribute('data-theme')==='dark';
+  body.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('themeBtn').textContent=isDark?'DARK':'LIGHT';
+}
+
+/* ========== Posts Data (Recent Activities with External Links) ========== */
+const posts=[
+  {
+    year:'2026',image:'./images/blog-1.jpg',
+    url:'https://mp.weixin.qq.com/s/wesWviJXQj_9-VFTCtrYCg',
+    zh:{title:'"QClaw脑洞名场面"校园专场活动圆满落幕',subtitle:'AI赋能创意，实践点亮校园，累计征集100份高质量AI创新应用作品',collection:'近期活动'},
+    en:{title:'QClaw Campus Event Successfully Concluded',subtitle:'AI-powered creativity, 100 high-quality AI innovation works collected',collection:'Recent Event'}
+  },
+  {
+    year:'2026',image:'./images/blog-5.jpg',
+    url:'https://mp.weixin.qq.com/s/k38K-eH1sWVkuH454-DUdw',
+    zh:{title:'开源社团2025届干事竞选圆满落幕',subtitle:'薪火相传，竞绽锋芒，新一届骨干团队正式亮相',collection:'近期活动'},
+    en:{title:'2025 Executive Team Election Concluded',subtitle:'New leadership team officially unveiled',collection:'Recent Event'}
+  },
+  {
+    year:'2026',image:'./images/hero-art.jpg',
+    url:'https://mp.weixin.qq.com/s/NpshWB8oPYVWcNH0FLwofw',
+    zh:{title:'开源鸿蒙领学课堂·成都站圆满落幕',subtitle:'代码筑梦，鸿蒙启航，成都高校开源鸿蒙技术交流盛会',collection:'近期活动'},
+    en:{title:'OpenHarmony Learning Workshop Chengdu Concluded',subtitle:'Open source HarmonyOS tech exchange event for Chengdu universities',collection:'Recent Event'}
+  },
+  {
+    year:'2026',image:'./images/blog-3.jpg',
+    url:'https://mp.weixin.qq.com/s/Y6dHS4M0XSqOCHSejGLnCw',
+    zh:{title:'社团成员通过OpenHarmony人才认证',subtitle:'热烈祝贺！在副社长李枨精心组织下，成员成功获认证',collection:'近期活动'},
+    en:{title:'Members Pass OpenHarmony Talent Certification',subtitle:'Congratulations! Members successfully certified under VP Li Cheng',collection:'Recent Event'}
+  },
+  {
+    year:'2026',image:'./images/blog-6.jpg',
+    url:'https://mp.weixin.qq.com/s/o-wBNcbvTwd-_6Kwwghd9w',
+    zh:{title:'腾讯云社区龙虾公开课圆满落幕',subtitle:'社团社长陈圣夫以核心导师身份进行WorkBuddy实战演示',collection:'近期活动'},
+    en:{title:'Tencent Cloud Lobster Open Course Concluded',subtitle:'President Chen Shengfu demonstrated WorkBuddy as core instructor',collection:'Recent Event'}
+  }
+];
+
+function renderPosts(){
+  const container=document.getElementById('postsContainer');
+  container.innerHTML=posts.map((post)=>{
+    const c=post[lang];
+    return `<article class="post-item">
+      <a href="${post.url}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+        <div class="img-wrap">
+          <img src="${post.image}" alt="${c.title}" loading="lazy">
+        </div>
+        <h3>${c.title}</h3>
+        <p class="subtitle">${c.subtitle}</p>
+        <div class="meta"><span>${post.year}</span><span>/</span><span>${c.collection}</span></div>
+        <span class="read-more">${i18n[lang].readMore}</span>
+      </a>
+    </article>`;
+  }).join('');
+}
+
+/* ========== CV Data ========== */
+const cvSections={
+  zh:[
+    {name:'社团架构',items:[
+      {title:'外联部',subtitle:'负责对外交流与企业合作对接',year:'常设部门'},
+      {title:'宣策部',subtitle:'负责品牌宣传与活动策划',year:'常设部门'},
+      {title:'项目部',subtitle:'负责技术开发与开源项目维护',year:'常设部门'},
+      {title:'组织部',subtitle:'负责社团日常管理与活动组织',year:'常设部门'},
+      {title:'秘书处',subtitle:'负责行政管理与文档工作',year:'常设部门'},
+    ]},
+    {name:'技术方向',items:[
+      {title:'OpenHarmony (开源鸿蒙)',subtitle:'分布式操作系统学习与应用开发',year:'核心技术'},
+      {title:'openEuler (欧拉)',subtitle:'企业级Linux操作系统研究',year:'核心技术'},
+      {title:'OpenTenBase (腾讯数据库)',subtitle:'开源数据库内核开发与优化',year:'核心技术'},
+    ]},
+    {name:'荣誉奖项',items:[
+      {title:'开放原子菁英团奖',subtitle:'全国仅3个团队入选',year:'2025'},
+      {title:'校源行优秀指导教师',subtitle:'指导老师魏雨东',year:'2025'},
+      {title:'春耕计划优秀组织高校',subtitle:'社团组织工作获全国性认可',year:'2025'},
+      {title:'OpenTenBase核心贡献挑战赛',subtitle:'社团成员荣获竞赛奖项',year:'2024'},
+    ]},
+    {name:'核心成员',items:[
+      {title:'陈圣夫 / 会长',subtitle:'',year:'现任'},
+      {title:'李枨 / 副会长',subtitle:'',year:'现任'},
+      {title:'李星谕 / 副会长',subtitle:'',year:'现任'},
+      {title:'柴诗雨 / 副会长',subtitle:'',year:'现任'},
+      {title:'林涛 / 副会长',subtitle:'',year:'现任'},
+    ]}
+  ],
+  en:[
+    {name:'Departments',items:[
+      {title:'Outreach Department',subtitle:'External communication & enterprise cooperation',year:'Standing'},
+      {title:'Publicity Department',subtitle:'Brand promotion & event planning',year:'Standing'},
+      {title:'Project Department',subtitle:'Technical development & open source projects',year:'Standing'},
+      {title:'Organization Department',subtitle:'Daily management & activity coordination',year:'Standing'},
+      {title:'Secretariat',subtitle:'Administrative management & documentation',year:'Standing'},
+    ]},
+    {name:'Tech Stack',items:[
+      {title:'OpenHarmony',subtitle:'Distributed OS learning & application development',year:'Core'},
+      {title:'openEuler',subtitle:'Enterprise Linux OS research',year:'Core'},
+      {title:'OpenTenBase',subtitle:'Open source database kernel development',year:'Core'},
+    ]},
+    {name:'Awards',items:[
+      {title:'OpenAtom Elite Team Award',subtitle:'One of only 3 teams nationwide',year:'2025'},
+      {title:'Outstanding Mentor Award',subtitle:'Advisor Mr. Wei Yudong',year:'2025'},
+      {title:'Spring Plan Excellence Award',subtitle:'National recognition',year:'2025'},
+      {title:'OpenTenBase Core Contribution Challenge',subtitle:'Club members won awards',year:'2024'},
+    ]},
+    {name:'Core Members',items:[
+      {title:'Chen Shengfu / President',subtitle:'',year:'Current'},
+      {title:'Li Cheng / Vice President',subtitle:'',year:'Current'},
+      {title:'Li Xingyu / Vice President',subtitle:'',year:'Current'},
+      {title:'Chai Shiyu / Vice President',subtitle:'',year:'Current'},
+      {title:'Lin Tao / Vice President',subtitle:'',year:'Current'},
+    ]}
+  ]
+};
+
+function renderCV(){
+  const container=document.getElementById('cvContainer');
+  const sections=cvSections[lang];
+  container.innerHTML=sections.map(sec=>{
+    return `<div class="cv-section">
+      ${sec.items.map((item,idx)=>`
+        <div class="cv-row">
+          ${idx===0?`<div class="cv-label">${sec.name}</div>`:`<div class="cv-spacer"></div>`}
+          <div class="cv-body">
+            <p>${item.title}</p>
+            ${item.subtitle?`<p class="sub">${item.subtitle}</p>`:''}
+            <p>${item.year}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+  }).join('');
+}
+
+/* ========== Join Modal ========== */
+function openJoinModal(){document.getElementById('joinModal').classList.add('active');}
+function closeJoinModal(){document.getElementById('joinModal').classList.remove('active');}
+function submitJoin(){
+  const name=document.getElementById('joinName').value.trim();
+  const msg=document.getElementById('joinMsg').value.trim();
+  if(!name||!msg){alert(lang==='zh'?'请填写完整信息':'Please fill in all fields');return;}
+  const subject=lang==='zh'?`申请加入社团 - ${name}`:`Club Application - ${name}`;
+  const body=`姓名: ${name}%0D%0A%0D%0A申请理由:%0D%0A${msg}`;
+  window.location.href=`mailto:opensource@kecheng.edu.cn?subject=${encodeURIComponent(subject)}&body=${body}`;
+  closeJoinModal();
+}
+document.getElementById('joinModal').addEventListener('click',function(e){if(e.target===this)closeJoinModal();});
+
+/* ========== Shader Canvas ========== */
+const canvas=document.getElementById('shaderCanvas');
+const gl=canvas.getContext('webgl');
+function resizeCanvas(){
+  const parent=canvas.parentElement;
+  canvas.width=parent.clientWidth;
+  canvas.height=parent.clientHeight;
+  gl.viewport(0,0,canvas.width,canvas.height);
+}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+
+const vsSource=`attribute vec4 aPos;void main(){gl_Position=aPos;}`;
+const fsSource=`precision mediump float;
+uniform float uTime;uniform vec2 uRes;uniform vec3 uColor;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){
+  vec2 i=floor(p),f=fract(p);
+  float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));
+  vec2 u=f*f*(3.0-2.0*f);
+  return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y;
+}
+float fbm(vec2 p){
+  float v=0.0,a=0.5;
+  for(int i=0;i<5;i++){v+=a*noise(p);p*=2.0;a*=0.5;}
+  return v;
+}
+void main(){
+  vec2 uv=gl_FragCoord.xy/uRes;
+  float t=uTime*0.00015;
+  float n1=fbm(vec2(uv.x*3.0+t,uv.y*2.0-t*0.5));
+  float n2=fbm(vec2(uv.x*2.0-t*0.7,uv.y*3.0+t*0.3));
+  float n3=fbm(vec2(uv.x*5.0+t*0.4,uv.y*4.0-t*0.6));
+  float pattern=smoothstep(0.3,0.7,n1*0.5+n2*0.3+n3*0.2);
+  float d=length(uv-vec2(0.5));
+  pattern*=1.0-smoothstep(0.2,0.8,d);
+  float grain=hash(gl_FragCoord.xy+uTime*0.001)*0.08-0.04;
+  vec3 col=uColor*pattern*1.3+grain;
+  col+=uColor*0.03;
+  gl_FragColor=vec4(col,1.0);
+}`;
+
+function compileShader(src,type){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+const prog=gl.createProgram();
+gl.attachShader(prog,compileShader(vsSource,gl.VERTEX_SHADER));
+gl.attachShader(prog,compileShader(fsSource,gl.FRAGMENT_SHADER));
+gl.linkProgram(prog);gl.useProgram(prog);
+
+const buf=gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+const aPos=gl.getAttribLocation(prog,'aPos');
+gl.enableVertexAttribArray(aPos);
+gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
+
+const uTime=gl.getUniformLocation(prog,'uTime');
+const uRes=gl.getUniformLocation(prog,'uRes');
+const uColor=gl.getUniformLocation(prog,'uColor');
+
+function updateShaderColor(){
+  const isDark=document.body.getAttribute('data-theme')==='dark';
+  const c=isDark?[0.78,0.74,0.68]:[0.10,0.18,0.16];
+  gl.uniform3f(uColor,c[0],c[1],c[2]);
+}
+
+function renderShader(time){
+  gl.uniform1f(uTime,time);
+  gl.uniform2f(uRes,canvas.width,canvas.height);
+  updateShaderColor();
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+  requestAnimationFrame(renderShader);
+}
+requestAnimationFrame(renderShader);
+
+/* ========== Init ========== */
+renderPosts();
+renderCV();
+</script>
+</body>
+</html>
