@@ -8,3 +8,8 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Build
+node_modules/
+dist/
+.parcel-cache/

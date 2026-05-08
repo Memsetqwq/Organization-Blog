@@ -1,0 +1,17 @@
+{
+  "name": "organization-blog",
+  "version": "1.0.0",
+  "description": "科成开放原子开源社团官网",
+  "source": "src/index.html",
+  "scripts": {
+    "dev": "parcel",
+    "build": "parcel build",
+    "clean": "rm -rf dist .parcel-cache"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  }
+}

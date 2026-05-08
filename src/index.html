@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title id="pageTitle">科成开放原子开源社团</title>
+<link rel="stylesheet" href="./css/theme.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="navbar">
+  <a href="#" class="logo" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})">
+    <img src="../社团图标.jpg" alt="" style="width:28px;height:28px;border-radius:6px;margin-right:10px;vertical-align:middle;object-fit:cover">
+    <span style="vertical-align:middle">科成开源</span>
+    <span style="vertical-align:middle">CDUESTC OPEN SOURCE</span>
+  </a>
+  <div class="links">
+    <a href="https://github.com/CDUESTC-OpenAtom-Club" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="#about" data-nav="about">关于我们</a>
+    <a href="#tech" data-nav="tech">技术方向</a>
+    <a href="#events" data-nav="events">近期活动</a>
+    <a href="#members" data-nav="members">核心成员</a>
+  </div>
+  <div class="ctrl">
+    <div class="theme-toggle-wrap" title="切换主题">
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="切换明暗主题" type="button">
+        <div class="clouds">
+          <div class="cloud c1"></div>
+          <div class="cloud c2"></div>
+        </div>
+        <div class="stars">
+          <div class="star s1"></div>
+          <div class="star s2"></div>
+          <div class="star s3"></div>
+          <div class="star s4"></div>
+          <div class="star s5"></div>
+        </div>
+        <div class="toggle-orb"></div>
+      </button>
+    </div>
+    <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="content">
+    <h1 class="an" id="heroTitle">因开放而精彩，因开源而未来</h1>
+    <p class="motto an d2" id="heroSub">开放原子开源基金会 · 腾讯 · 电子科技大学成都学院</p>
+  </div>
+  <a href="#about" class="scroll an d5" id="heroScroll">Scroll</a>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="sec-head an">
+    <h2 id="aboutTitle">构建开源新生态</h2>
+    <p id="aboutDesc">连接校园与产业，培养具备开源精神与实践能力的高素质人才</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-item an d1">
+      <div class="num">2024</div>
+      <h4 id="aboutCard1t">成立元年</h4>
+      <p id="aboutCard1d">开放原子开源基金会联合腾讯共同发起</p>
+    </div>
+    <div class="about-item an d2">
+      <div class="num">5</div>
+      <h4 id="aboutCard2t">核心部门</h4>
+      <p id="aboutCard2d">外联 · 宣策 · 项目 · 组织 · 秘书</p>
+    </div>
+    <div class="about-item an d3">
+      <div class="num">3</div>
+      <h4 id="aboutCard3t">技术方向</h4>
+      <p id="aboutCard3d">鸿蒙 · 欧拉 · OpenTenBase</p>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="section" id="tech" style="padding-top:0">
+  <div class="sec-head an">
+    <h2 id="techTitle">深耕国产开源技术</h2>
+    <p id="techDesc">以真实项目驱动学习，从学习到贡献，走出一条扎实的开源之路</p>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-card an d1">
+      <div class="img"><img src="./images/cover-3.jpg" alt="OpenHarmony" loading="lazy"></div>
+      <div class="info">
+        <h4>OpenHarmony</h4>
+        <p id="techCard1">开源鸿蒙分布式操作系统，探索万物互联的无限可能。社团成员已完成人才认证，并参与智慧校园项目开发。</p>
+        <span class="tag">开源鸿蒙</span>
+      </div>
+    </div>
+    <div class="tech-card an d2">
+      <div class="img"><img src="./images/cover-2.jpg" alt="openEuler" loading="lazy"></div>
+      <div class="info">
+        <h4>openEuler</h4>
+        <p id="techCard2">企业级Linux操作系统研究，从内核原理到生产部署，系统掌握国产基础设施核心技术栈。</p>
+        <span class="tag">欧拉系统</span>
+      </div>
+    </div>
+    <div class="tech-card an d3">
+      <div class="img"><img src="./images/cover-5.jpg" alt="OpenTenBase" loading="lazy"></div>
+      <div class="info">
+        <h4>OpenTenBase</h4>
+        <p id="techCard3">腾讯开源数据库内核开发与优化。基于钩子机制实现无侵入式监控，荣获核心贡献挑战赛奖项。</p>
+        <span class="tag">数据库</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="sec-head section an" style="padding-bottom:60px">
+    <h2 id="eventsTitle">近期动态</h2>
+    <p id="eventsDesc">每一次实践，都是向开源世界更近一步</p>
+  </div>
+
+  <div class="event-row an d1">
+    <div class="event-img"><img src="./images/cover-1.jpg" alt="QClaw" loading="lazy"></div>
+    <div class="event-info">
+      <div class="eyebrow">2026.04.27</div>
+      <h3 id="event1t">"QClaw脑洞名场面"校园专场</h3>
+      <p id="event1d">AI赋能创意，实践点亮校园。累计征集100份高质量AI创新应用作品，用代码将想象变为现实。</p>
+      <div class="meta">近期活动 / 校园专场</div>
+      <a href="https://mp.weixin.qq.com/s/wesWviJXQj_9-VFTCtrYCg" target="_blank" rel="noopener" id="event1link">阅读全文</a>
+    </div>
+  </div>
+
+  <div class="event-row an d2">
+    <div class="event-img"><img src="./images/cover-2.jpg" alt="竞选" loading="lazy"></div>
+    <div class="event-info">
+      <div class="eyebrow">2026.04.20</div>
+      <h3 id="event2t">2025届干事竞选</h3>
+      <p id="event2d">薪火相传，竞绽锋芒。新一届骨干团队正式亮相，延续开源精神，开启全新征程。</p>
+      <div class="meta">近期活动 / 换届选举</div>
+      <a href="https://mp.weixin.qq.com/s/k38K-eH1sWVkuH454-DUdw" target="_blank" rel="noopener" id="event2link">阅读全文</a>
+    </div>
+  </div>
+
+  <div class="event-row an d3">
+    <div class="event-img"><img src="./images/cover-3.jpg" alt="鸿蒙" loading="lazy"></div>
+    <div class="event-info">
+      <div class="eyebrow">2026.04.04</div>
+      <h3 id="event3t">开源鸿蒙领学课堂·成都站</h3>
+      <p id="event3d">代码筑梦，鸿蒙启航。成都高校开源鸿蒙技术交流盛会，与志同道合的开发者共同探索分布式操作系统的前沿应用。</p>
+      <div class="meta">近期活动 / 技术交流</div>
+      <a href="https://mp.weixin.qq.com/s/NpshWB8oPYVWcNH0FLwofw" target="_blank" rel="noopener" id="event3link">阅读全文</a>
+    </div>
+  </div>
+
+  <div class="event-row an d4">
+    <div class="event-img"><img src="./images/cover-4.jpg" alt="认证" loading="lazy"></div>
+    <div class="event-info">
+      <div class="eyebrow">2026.04.04</div>
+      <h3 id="event4t">OpenHarmony人才认证</h3>
+      <p id="event4d">在副社长李枨的精心组织下，社团成员成功通过OpenHarmony人才认证，用实力证明了自己。</p>
+      <div class="meta">近期活动 / 能力认证</div>
+      <a href="https://mp.weixin.qq.com/s/Y6dHS4M0XSqOCHSejGLnCw" target="_blank" rel="noopener" id="event4link">阅读全文</a>
+    </div>
+  </div>
+
+  <div class="event-row an d5">
+    <div class="event-img"><img src="./images/cover-5.jpg" alt="腾讯云" loading="lazy"></div>
+    <div class="event-info">
+      <div class="eyebrow">2026.03.24</div>
+      <h3 id="event5t">腾讯云社区龙虾公开课</h3>
+      <p id="event5d">社团社长陈圣夫以核心导师身份进行WorkBuddy实战演示，将开源社区的协作理念传递给更多开发者。</p>
+      <div class="meta">近期活动 / 技术分享</div>
+      <a href="https://mp.weixin.qq.com/s/o-wBNcbvTwd-_6Kwwghd9w" target="_blank" rel="noopener" id="event5link">阅读全文</a>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERS -->
+<section class="section" id="members" style="padding-top:120px">
+  <div class="sec-head an">
+    <h2 id="membersTitle">核心团队</h2>
+    <p id="membersDesc">一群热爱开源、脚踏实地的年轻人</p>
+  </div>
+  <div class="member-grid">
+    <div class="member-card an d1">
+      <div class="avatar">陈</div>
+      <h4>陈圣夫</h4>
+      <p>会长</p>
+      <div class="role" id="role1">社团负责人</div>
+    </div>
+    <div class="member-card an d2">
+      <div class="avatar">李</div>
+      <h4>李枨</h4>
+      <p>副会长</p>
+      <div class="role" id="role2">OpenTenBase方向</div>
+    </div>
+    <div class="member-card an d3">
+      <div class="avatar">李</div>
+      <h4>李星谕</h4>
+      <p>副会长</p>
+      <div class="role" id="role3">技术骨干</div>
+    </div>
+    <div class="member-card an d4">
+      <div class="avatar">柴</div>
+      <h4>柴诗雨</h4>
+      <p>副会长</p>
+      <div class="role" id="role4">社团骨干</div>
+    </div>
+    <div class="member-card an d5">
+      <div class="avatar">林</div>
+      <h4>林涛</h4>
+      <p>副会长</p>
+      <div class="role" id="role5">社团骨干</div>
+    </div>
+  </div>
+</section>
+
+<!-- HONORS -->
+<section class="section" id="honors" style="padding-top:0">
+  <div class="sec-head an">
+    <h2 id="honorsTitle">荣誉与成果</h2>
+    <p id="honorsDesc">用实力说话，以贡献立身</p>
+  </div>
+  <div class="honor-grid">
+    <div class="honor-item an d1">
+      <div class="year">2025</div>
+      <h4 id="honor1">开放原子菁英团奖</h4>
+      <p>全国仅3个团队入选</p>
+    </div>
+    <div class="honor-item an d2">
+      <div class="year">2025</div>
+      <h4 id="honor2">校源行优秀指导教师</h4>
+      <p>魏雨东老师</p>
+    </div>
+    <div class="honor-item an d3">
+      <div class="year">2025</div>
+      <h4 id="honor3">春耕计划优秀组织</h4>
+      <p>全国性认可</p>
+    </div>
+    <div class="honor-item an d4">
+      <div class="year">2024</div>
+      <h4 id="honor4">OpenTenBase核心贡献</h4>
+      <p>挑战赛获奖</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="footer">
+  <div class="footer-inner">
+    <p>科成开放原子开源社团 · 因开放而精彩，因开源而未来</p>
+    <div class="links">
+      <button onclick="openJoin()" id="footerJoin">加入我们</button>
+      <a href="https://github.com/CDUESTC-OpenAtom-Club" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+
+<!-- JOIN MODAL -->
+<div class="modal" id="joinModal">
+  <div class="modal-box">
+    <button class="close" onclick="closeJoin()">&times;</button>
+    <h3 id="mTitle">加入科成开源社团</h3>
+    <p class="subtitle" id="mSub">填写以下信息，我们将通过邮件与你联系</p>
+
+    <label id="mNameLabel">姓名</label>
+    <input type="text" id="mName" placeholder="请输入你的姓名">
+
+    <label id="mEmailLabel">邮箱</label>
+    <input type="email" id="mEmail" placeholder="your@email.com">
+
+    <label id="mDeptLabel">意向部门</label>
+    <select id="mDept">
+      <option value="">请选择意向部门</option>
+      <option value="projects">项目部 — 技术开发与开源项目维护</option>
+      <option value="outreach">外联部 — 对外交流与企业合作对接</option>
+      <option value="publicity">宣策部 — 品牌宣传与活动策划</option>
+      <option value="org">组织部 — 日常管理与活动组织</option>
+      <option value="admin">秘书处 — 行政管理与文档工作</option>
+    </select>
+
+    <label id="mMsgLabel">自我介绍 / 申请理由</label>
+    <p class="hint" id="mHint">请介绍你的技术背景、感兴趣的领域（OpenHarmony / openEuler / OpenTenBase），以及为什么想加入我们。</p>
+    <textarea id="mMsg" rows="5" placeholder="例如：我是计算机专业大二学生，对开源鸿蒙系统很感兴趣，希望通过社团学习分布式操作系统开发..."></textarea>
+
+    <div class="btns">
+      <button class="cn" onclick="closeJoin()" id="mCancel">取消</button>
+      <button class="sb" onclick="submitJoin()" id="mSubmit">提交申请</button>
+    </div>
+  </div>
+</div>
+
+<script src="./js/theme.js"></script>
+<script src="./js/main.js"></script>
+</body>
+</html>
