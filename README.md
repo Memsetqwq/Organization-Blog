@@ -53,66 +53,63 @@
 
 ---
 
-## 版本历史
-
-本仓库采用分支管理，每个版本独立迭代：
-
-| 分支 | 版本 | 描述 |
-|-----|------|------|
-| [Version_0.1](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.1) | 经典三栏版 | 经典三栏布局，Shader 背景动画，支持深色/浅色主题切换 |
-| [Version_0.2](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.2) | 全屏沉浸版 | 全屏沉浸式设计，滚动动画，现代化卡片布局 |
-| [Version_0.3](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.3) | 精致优化版 | 基于 v2 优化，添加系统级明暗主题，WebGL 背景增强 |
-| [Version_0.4](https://github.com/Memsetqwq/Organization-Blog/tree/Version_0.4) | 动画主题版 | 太阳/月亮切换按钮，响应式亮暗主题，米白/深蓝配色 |
-| [main](https://github.com/Memsetqwq/Organization-Blog/tree/main) | 主分支 | 包含所有版本的最新整合 |
-
-### 各版本特性对比
-
-| 特性 | v0.1 | v0.2 | v0.3 | v0.4 |
-|-----|------|------|------|------|
-| 布局 | 三栏布局 | 全屏分栏 | 全屏分栏 | 全屏分栏 |
-| 动画 | Shader 背景 | 滚动渐入动画 | 滚动渐入动画 | 滚动渐入 + 主题切换动画 |
-| 主题 | 手动切换 | 仅暗色 | 系统级自适应 | 响应式亮暗 + 太阳/月亮按钮 |
-| 亮色配色 | - | - | - | 米白背景 + 翠绿强调 |
-| 暗色配色 | - | - | 深蓝灰 | 深蓝背景 + 荧光绿强调 |
-| 导航 | 顶部固定栏 | 毛玻璃导航栏 | 毛玻璃导航栏 | 毛玻璃导航栏 |
-| 持久化 | ❌ | ❌ | ❌ | ✅ localStorage |
-| 二维码 | ❌ | ✅ | ✅ | ✅ |
-
----
-
 ## 项目结构
 
 ```
 Organization-Blog/
-├── 社团图标.jpg                    # 社团标志
-├── 社团微信公众号二维码.png           # 微信公众号二维码
-├── 初版示例.html                    # Version_0.1 - 经典三栏版
-├── v2.html                         # Version_0.2 - 全屏沉浸版
-├── v3.html                         # Version_0.3 - 精致优化版
-├── v4.html                         # Version_0.4 - 动画主题版
-├── README.md                       # 项目总览文档
-└── docs/
-    ├── README_v0.1.md             # Version_0.1 详细文档
-    ├── README_v0.2.md             # Version_0.2 详细文档
-    ├── README_v0.3.md             # Version_0.3 详细文档
-    └── README_v0.4.md             # Version_0.4 详细文档
+├── dist/                      # Parcel 构建产物（部署用）
+├── src/                       # 源代码
+│   ├── index.html             # 主页面入口
+│   ├── css/theme.css          # 样式文件
+│   ├── js/
+│   │   ├── theme.js           # 主题切换逻辑
+│   │   └── main.js            # 国际化、WebGL、动画等
+│   └── images/                # 图片资源
+├── archive/                   # 历史版本归档
+│   ├── v2.html                # v0.2 全屏沉浸版
+│   ├── v3.html                # v0.3 精致优化版
+│   ├── 初版示例.html           # v0.1 经典三栏版
+│   └── docs/                  # 各版本详细文档
+├── 社团图标.jpg               # 社团标志
+├── 社团微信公众号二维码.png     # 微信公众号二维码
+├── package.json               # npm 配置
+├── README.md                  # 项目总览文档
+└── CLAUDE.md                 # Claude AI 辅助开发文档
 ```
 
 ---
 
-## 本地运行
+## 本地开发
 
 ```bash
-# 直接用浏览器打开任意版本
-open 初版示例.html      # v0.1
-open v2.html           # v0.2
-open v3.html           # v0.3
-open v4.html           # v0.4
+# 安装依赖
+npm install
 
-# 或使用 Python 简易服务器
-python -m http.server 8080
-# 然后访问 http://localhost:8080
+# 开发模式（热重载）
+npm run dev
+
+# 生产构建
+npm run build
+
+# 清理构建缓存
+npm run clean
 ```
+
+> 构建产物输出至 `dist/` 目录，可直接部署至 GitHub Pages 等静态托管服务。
+
+---
+
+## 版本历史
+
+| 分支 | 版本 | 描述 |
+|-----|------|------|
+| Version_0.1 | 经典三栏版 | 经典三栏布局，Shader 背景动画，支持深色/浅色主题切换 |
+| Version_0.2 | 全屏沉浸版 | 全屏沉浸式设计，滚动动画，现代化卡片布局 |
+| Version_0.3 | 精致优化版 | 基于 v2 优化，添加系统级明暗主题，WebGL 背景增强 |
+| Version_0.4 | 动画主题版 | 太阳/月亮切换按钮，响应式亮暗主题，米白/深蓝配色 |
+| Version_0.5 | Parcel 构建版 | 引入 Parcel 构建系统，代码模块化分离，历史版本归档 |
+
+各版本详细文档请查看 `archive/docs/` 目录。
 
 ---
 
