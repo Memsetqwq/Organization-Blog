@@ -126,24 +126,38 @@ document.getElementById('joinModal').addEventListener('click',e=>{if(e.target===
   if(!window.WebGLRenderingContext)return;
   let gl;try{gl=c.getContext('webgl')||c.getContext('experimental-webgl')}catch(e){return}
   if(!gl)return;
+  const isLight=()=>document.documentElement.getAttribute('data-theme')==='light';
   try{
     function rs(){const d=Math.min(window.devicePixelRatio||1,2);c.width=c.clientWidth*d;c.height=c.clientHeight*d;gl.viewport(0,0,c.width,c.height)}
     rs();
     const vs=`attribute vec4 aPos;void main(){gl_Position=aPos;}`;
-    const fs=`precision mediump float;uniform float uT;uniform vec2 uR;
+    const fsLight=`precision mediump float;uniform float uT;uniform vec2 uR;
 	float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 	float n(vec2 p){vec2 i=floor(p),f=fract(p);float a=h(i),b=h(i+vec2(1,0)),c=h(i+vec2(0,1)),d=h(i+vec2(1,1));vec2 u=f*f*(3.-2.*f);return mix(a,b,u.x)+(c-a)*u.y*(1.-u.x)+(d-b)*u.x*u.y;}
 	float f(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p*=2.;a*=.5;}return v;}
-	void main(){vec2 uv=gl_FragCoord.xy/uR;float t=uT*.00012,p=smoothstep(.3,.7,f(vec2(uv.x*3.+t,uv.y*2.-.5*t))*.5+f(vec2(uv.x*2.-.7*t,uv.y*3.+.3*t))*.3+f(vec2(uv.x*5.+.4*t,uv.y*4.-.6*t))*.2);p*=1.-smoothstep(.2,.8,length(uv-.5));float g=h(gl_FragCoord.xy+uT*.001)*.08-.04;vec3 col=vec3(.1,.18,.16)*p*1.3+g;col+=vec3(.1,.18,.16)*.03;gl_FragColor=vec4(col,1.);}`;
+	void main(){vec2 uv=gl_FragCoord.xy/uR;float t=uT*.00012,p=smoothstep(.3,.7,f(vec2(uv.x*3.+t,uv.y*2.-.5*t))*.5+f(vec2(uv.x*2.-.7*t,uv.y*3.+.3*t))*.3+f(vec2(uv.x*5.+.4*t,uv.y*4.-.6*t))*.2);p*=1.-smoothstep(.2,.8,length(uv-.5));float g=h(gl_FragCoord.xy+uT*.001)*.05-.025;vec3 col=vec3(.95,.97,1.)*p*.6+vec3(.85,.92,1.)*.08+g;gl_FragColor=vec4(col,.7);}`;
+    const fsDark=`precision mediump float;uniform float uT;uniform vec2 uR;
+	float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+	float n(vec2 p){vec2 i=floor(p),f=fract(p);float a=h(i),b=h(i+vec2(1,0)),c=h(i+vec2(0,1)),d=h(i+vec2(1,1));vec2 u=f*f*(3.-2.*f);return mix(a,b,u.x)+(c-a)*u.y*(1.-u.x)+(d-b)*u.x*u.y;}
+	float f(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p*=2.;a*=.5;}return v;}
+	void main(){vec2 uv=gl_FragCoord.xy/uR;float t=uT*.00012,p=smoothstep(.3,.7,f(vec2(uv.x*3.+t,uv.y*2.-.5*t))*.5+f(vec2(uv.x*2.-.7*t,uv.y*3.+.3*t))*.3+f(vec2(uv.x*5.+.4*t,uv.y*4.-.6*t))*.2);p*=1.-smoothstep(.2,.8,length(uv-.5));float g=h(gl_FragCoord.xy+uT*.001)*.1-.05;vec3 col=vec3(.04,.06,.12)*p*1.2+g;col+=vec3(.15,.22,.45)*.08;gl_FragColor=vec4(col,1.);}`;
     function cmp(s,t){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
-    const p=gl.createProgram();gl.attachShader(p,cmp(vs,gl.VERTEX_SHADER));gl.attachShader(p,cmp(fs,gl.FRAGMENT_SHADER));gl.linkProgram(p);
-    if(!gl.getProgramParameter(p,gl.LINK_STATUS))return;gl.useProgram(p);
+    let prog=gl.createProgram();gl.attachShader(prog,cmp(vs,gl.VERTEX_SHADER));gl.attachShader(prog,cmp(isLight()?fsLight:fsDark,gl.FRAGMENT_SHADER));gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog,gl.LINK_STATUS))return;gl.useProgram(prog);
     const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
-    const ap=gl.getAttribLocation(p,'aPos');gl.enableVertexAttribArray(ap);gl.vertexAttribPointer(ap,2,gl.FLOAT,false,0,0);
-    const ut=gl.getUniformLocation(p,'uT'),ur=gl.getUniformLocation(p,'uR');let aid;
+    const ap=gl.getAttribLocation(prog,'aPos');gl.enableVertexAttribArray(ap);gl.vertexAttribPointer(ap,2,gl.FLOAT,false,0,0);
+    const ut=gl.getUniformLocation(prog,'uT'),ur=gl.getUniformLocation(prog,'uR');let aid;
     function rfn(tm){gl.uniform1f(ut,tm);gl.uniform2f(ur,c.width,c.height);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);aid=requestAnimationFrame(rfn);}
     aid=requestAnimationFrame(rfn);window.addEventListener('resize',rs);
     document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(aid);else aid=requestAnimationFrame(rfn);});
+    // Theme change listener
+    const themeObs=new MutationObserver(()=>{
+      const newFs=isLight()?fsLight:fsDark;
+      const newProg=gl.createProgram();
+      gl.attachShader(newProg,cmp(vs,gl.VERTEX_SHADER));gl.attachShader(newProg,cmp(newFs,gl.FRAGMENT_SHADER));gl.linkProgram(newProg);
+      if(gl.getProgramParameter(newProg,gl.LINK_STATUS)){gl.deleteProgram(prog);prog=newProg;gl.useProgram(prog);}
+    });
+    themeObs.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   }catch(e){}
 })();
 

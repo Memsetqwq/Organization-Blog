@@ -10,36 +10,37 @@
 
 <!-- NAV -->
 <nav class="nav" id="navbar">
-  <a href="#" class="logo" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})">
-    <img src="../社团图标.jpg" alt="" style="width:28px;height:28px;border-radius:6px;margin-right:10px;vertical-align:middle;object-fit:cover">
-    <span style="vertical-align:middle">科成开源</span>
-    <span style="vertical-align:middle">CDUESTC OPEN SOURCE</span>
-  </a>
-  <div class="links">
-    <a href="https://github.com/CDUESTC-OpenAtom-Club" target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href="#about" data-nav="about">关于我们</a>
-    <a href="#tech" data-nav="tech">技术方向</a>
-    <a href="#events" data-nav="events">近期活动</a>
-    <a href="#members" data-nav="members">核心成员</a>
-  </div>
-  <div class="ctrl">
-    <div class="theme-toggle-wrap" title="切换主题">
-      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="切换明暗主题" type="button">
-        <div class="clouds">
-          <div class="cloud c1"></div>
-          <div class="cloud c2"></div>
-        </div>
-        <div class="stars">
-          <div class="star s1"></div>
-          <div class="star s2"></div>
-          <div class="star s3"></div>
-          <div class="star s4"></div>
-          <div class="star s5"></div>
-        </div>
-        <div class="toggle-orb"></div>
-      </button>
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})">
+      <img src="../社团图标.jpg" alt="" style="width:28px;height:28px;border-radius:6px;margin-right:10px;vertical-align:middle;object-fit:cover">
+      <span style="vertical-align:middle">科成开源</span>
+      <span style="vertical-align:middle">CDUESTC OPEN SOURCE</span>
+    </a>
+    <div class="links">
+      <a href="#about" data-nav="about">关于我们</a>
+      <a href="#tech" data-nav="tech">技术方向</a>
+      <a href="#events" data-nav="events">近期活动</a>
+      <a href="#members" data-nav="members">核心成员</a>
     </div>
-    <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+    <div class="ctrl">
+      <div class="theme-toggle-wrap" title="切换主题">
+        <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="切换明暗主题" type="button">
+          <div class="clouds">
+            <div class="cloud c1"></div>
+            <div class="cloud c2"></div>
+          </div>
+          <div class="stars">
+            <div class="star s1"></div>
+            <div class="star s2"></div>
+            <div class="star s3"></div>
+            <div class="star s4"></div>
+            <div class="star s5"></div>
+          </div>
+          <div class="toggle-orb"></div>
+        </button>
+      </div>
+      <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+    </div>
   </div>
 </nav>
 
@@ -252,6 +253,10 @@
     <div class="links">
       <button onclick="openJoin()" id="footerJoin">加入我们</button>
       <a href="https://github.com/CDUESTC-OpenAtom-Club" target="_blank" rel="noopener">GitHub</a>
+      <div class="follow-us">
+        <span class="follow-label">关注我们</span>
+        <img src="../社团微信公众号二维码.png" alt="微信公众号二维码" class="qr-code">
+      </div>
     </div>
   </div>
 </footer>
