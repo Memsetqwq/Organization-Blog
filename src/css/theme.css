@@ -183,7 +183,7 @@ body{
   transition:background .5s,border-color .5s;
 }
 .nav-inner{
-  max-width:1200px;margin:0 auto;padding:0 28px;
+  width:100%;padding:0 3%;
   height:100%;display:flex;align-items:center;justify-content:space-between;
 }
 .nav .logo{font-size:14px;font-weight:600;letter-spacing:.04em;color:var(--text);text-decoration:none;transition:opacity .25s}
@@ -377,7 +377,7 @@ body{
 
 /* FOOTER */
 .footer{border-top:1px solid var(--border);padding:48px 28px;background:var(--bg)}
-.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.footer-inner{width:100%;padding:0 3%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
 .footer p{font-size:13px;color:var(--text-2);font-weight:300;letter-spacing:.02em}
 .footer .links{display:flex;gap:28px;align-items:center}
 .footer .links a,.footer .links button{
@@ -468,12 +468,12 @@ body{
   .member-grid{grid-template-columns:repeat(2,1fr)}
   .event-info{padding:36px 24px}
   .hero h1{font-size:34px}
-  .nav-inner{padding:0 20px}
+  .nav-inner{padding:0 3%}
 }
 @media(max-width:480px){
   .hero h1{font-size:30px}
   .member-grid{grid-template-columns:1fr}
-  .footer-inner{flex-direction:column;text-align:center}
+  .footer-inner{flex-direction:column;text-align:center;padding:0 2%}
   .modal-box{padding:28px 20px}
 }
 
