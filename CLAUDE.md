@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-科成开放原子开源社团官网，一个静态社团介绍网站，当前版本为 v0.7。
+科成开放原子开源社团官网，一个静态社团介绍网站，当前版本为 v0.8。
 
 ## 开发命令
 

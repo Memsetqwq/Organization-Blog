@@ -112,8 +112,19 @@ function applyLang(){
 function toggleLang(){lang=lang=='zh'?'en':'zh';document.getElementById('langBtn').textContent=lang=='zh'?'EN':'中';applyLang();}
 
 /* ===== SCROLL ANIMATION ===== */
+let lastScrollY=0;
 const animObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');animObs.unobserve(e.target)}})
+  const isScrollingDown=window.scrollY>lastScrollY;
+  lastScrollY=window.scrollY;
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      if(isScrollingDown||!e.target.classList.contains('in')){
+        e.target.classList.add('in');
+      }
+    }else if(!isScrollingDown){
+      e.target.classList.remove('in');
+    }
+  });
 },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
 
 const navObs=new IntersectionObserver((entries)=>{
@@ -127,7 +138,7 @@ const navObs=new IntersectionObserver((entries)=>{
 },{threshold:.25,rootMargin:'-56px 0px 0px 0px'});
 
 function observeAll(){
-  document.querySelectorAll('.an').forEach(el=>{if(!el.classList.contains('in'))animObs.observe(el);});
+  document.querySelectorAll('.an').forEach(el=>animObs.observe(el));
   ['about','tech','events','members','honors','projects'].forEach(id=>{const el=document.getElementById(id);if(el)navObs.observe(el);});
 }
 document.addEventListener('DOMContentLoaded',observeAll);
