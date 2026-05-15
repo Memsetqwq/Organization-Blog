@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-科成开放原子开源社团官网，一个静态社团介绍网站，当前版本为 v0.6（基于 v0.5 Parcel 构建版）。
+科成开放原子开源社团官网，一个静态社团介绍网站，当前版本为 v0.7。
 
 ## 开发命令
 
@@ -44,7 +44,7 @@ src/
 **WebGL 背景 (main.js)**
 - Hero 区域全屏 WebGL shader 背景
 - 使用 noise 函数生成动态纹理效果
-- 页面不可见时暂停动画以节省性能
+- 动画持续运行不受页面可见性限制
 
 **滚动动画 (main.js)**
 - `IntersectionObserver` 驱动淡入动画

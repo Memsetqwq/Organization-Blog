@@ -4,7 +4,7 @@
 
   const ThemeManager={
     key:'cduestc-theme-v1',
-    current:'dark',
+    current:'light',
     transitioning:false,
     listeners:[],
 

@@ -246,6 +246,7 @@ body{
 [data-theme="dark"] .hero h1{
   text-shadow:0 0 60px rgba(88,166,255,.3),0 2px 20px rgba(0,0,0,.4);
 }
+[data-theme="light"] .hero .motto{color:#fff}
 .hero .motto{color:var(--text-2);opacity:.8}
 .hero .scroll{color:var(--text-2);opacity:.6}
 .hero .motto{
@@ -350,7 +351,23 @@ body{
 .member-card p{font-size:13px;color:var(--text-2);font-weight:300}
 .member-card .role{font-size:11.5px;color:var(--accent);margin-top:10px;letter-spacing:.04em;font-weight:400}
 
-/* HONORS */
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.project-card{
+  display:block;background:var(--bg-2);border-radius:16px;border:1px solid var(--border);
+  padding:32px 24px;text-decoration:none;color:inherit;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+.project-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 12px 40px rgba(88,166,255,.12)}
+.project-card .project-icon{font-size:36px;margin-bottom:16px}
+.project-card h4{font-size:18px;font-weight:500;margin-bottom:10px;letter-spacing:.01em;color:var(--text)}
+.project-card p{font-size:13px;color:var(--text-2);line-height:1.7;font-weight:300;margin-bottom:16px}
+.project-card .project-lang{
+  display:inline-block;font-size:11px;color:var(--accent);
+  background:rgba(88,166,255,.1);padding:4px 12px;border-radius:4px;
+}
+.project-card.view-all{background:var(--bg-3)}
+.project-card.view-all:hover{background:var(--bg)}
 .honor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:24px;overflow:hidden}
 .honor-item{background:var(--bg-2);padding:44px 28px;text-align:center;transition:background .3s}
 .honor-item:hover{background:var(--bg-3)}
@@ -435,7 +452,7 @@ body{
 
 /* RESPONSIVE */
 @media(max-width:1024px){
-  .about-grid,.honor-grid{grid-template-columns:repeat(2,1fr)}
+  .about-grid,.honor-grid,.projects-grid{grid-template-columns:repeat(2,1fr)}
   .tech-grid{grid-template-columns:repeat(2,1fr)}
   .member-grid{grid-template-columns:repeat(3,1fr)}
   .event-row,.event-row:nth-child(even){flex-direction:column}
@@ -447,7 +464,7 @@ body{
 @media(max-width:768px){
   .section{padding:80px 20px}
   .sec-head{margin-bottom:52px}
-  .about-grid,.tech-grid,.honor-grid{grid-template-columns:1fr}
+  .about-grid,.tech-grid,.honor-grid,.projects-grid{grid-template-columns:1fr}
   .member-grid{grid-template-columns:repeat(2,1fr)}
   .event-info{padding:36px 24px}
   .hero h1{font-size:34px}

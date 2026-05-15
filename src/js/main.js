@@ -2,7 +2,7 @@
 let lang='zh';
 const T={
   zh:{
-    heroTitle:'因开放而精彩，因开源而未来',heroSub:'开放原子开源基金会 · 腾讯 · 电子科技大学成都学院',heroScroll:'Scroll',
+    heroTitle:'因开放而精彩，因开源而未来',heroSub:'开放原子开源基金会 · 电子科技大学成都学院',heroScroll:'Scroll',
     aboutTitle:'构建开源新生态',aboutDesc:'连接校园与产业，培养具备开源精神与实践能力的高素质人才',
     aboutCard1t:'成立元年',aboutCard1d:'开放原子开源基金会联合腾讯共同发起',
     aboutCard2t:'核心部门',aboutCard2d:'外联 · 宣策 · 项目 · 组织 · 秘书',
@@ -21,7 +21,7 @@ const T={
     role1:'社团负责人',role2:'OpenTenBase方向',role3:'技术骨干',role4:'社团骨干',role5:'社团骨干',
     honorsTitle:'荣誉与成果',honorsDesc:'用实力说话，以贡献立身',
     honor1:'开放原子菁英团奖',honor2:'校源行优秀指导教师',honor3:'春耕计划优秀组织',honor4:'OpenTenBase核心贡献',
-    footerJoin:'加入我们',
+    footerJoin:'加入我们',projectsTitle:'开源项目',projectsDesc:'持续贡献，共同成长',
     mTitle:'加入科成开源社团',mSub:'填写以下信息，我们将通过邮件与你联系',
     mNameLabel:'姓名',mNamePh:'请输入你的姓名',
     mEmailLabel:'邮箱',mEmailPh:'your@email.com',
@@ -32,7 +32,7 @@ const T={
     mCancel:'取消',mSubmit:'提交申请',
   },
   en:{
-    heroTitle:'Open for Brilliance, Source for Future',heroSub:'OpenAtom Foundation · Tencent · UESTC Chengdu',heroScroll:'Scroll',
+    heroTitle:'Open for Brilliance, Source for Future',heroSub:'OpenAtom Foundation · UESTC Chengdu',heroScroll:'Scroll',
     aboutTitle:'Building Open Source Ecosystem',aboutDesc:'Connecting campus and industry, cultivating talents with open source spirit',
     aboutCard1t:'Founded',aboutCard1d:'Jointly initiated by OpenAtom & Tencent',
     aboutCard2t:'Departments',aboutCard2d:'Outreach · Publicity · Projects · Org · Admin',
@@ -52,7 +52,7 @@ const T={
     honorsTitle:'Honors',honorsDesc:'Let achievements speak',
     honor1:'OpenAtom Elite Team',honor2:'Outstanding Mentor',honor3:'Spring Plan Excellence',honor4:'OpenTenBase Challenge',
     footerJoin:'Join Us',
-    mTitle:'Join KC Open Source',mSub:'Fill in your info and we will contact you via email',
+    mTitle:'Join KC Open Source',mSub:'Fill in your info and we will contact you via email',projectsTitle:'Open Source Projects',projectsDesc:'Contribute & Grow Together',
     mNameLabel:'Name',mNamePh:'Your name',
     mEmailLabel:'Email',mEmailPh:'your@email.com',
     mDeptLabel:'Department',
@@ -149,7 +149,6 @@ document.getElementById('joinModal').addEventListener('click',e=>{if(e.target===
     const ut=gl.getUniformLocation(prog,'uT'),ur=gl.getUniformLocation(prog,'uR');let aid;
     function rfn(tm){gl.uniform1f(ut,tm);gl.uniform2f(ur,c.width,c.height);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);aid=requestAnimationFrame(rfn);}
     aid=requestAnimationFrame(rfn);window.addEventListener('resize',rs);
-    document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(aid);else aid=requestAnimationFrame(rfn);});
     // Theme change listener
     const themeObs=new MutationObserver(()=>{
       const newFs=isLight()?fsLight:fsDark;
