@@ -51,7 +51,7 @@ const T={
     mCancel:'取消',mSubmit:'提交申请',
   },
   en:{
-    heroTitle:'Open for Brilliance, Source for Future',heroSub:'OpenAtom Foundation · UESTC Chengdu',heroScroll:'Scroll',
+    heroTitle:'Open for Brilliance, Source for Future',heroSub:'OpenAtom Foundation · CDUESTC',heroScroll:'Scroll',
     aboutTitle:'Building Open Source Ecosystem',aboutDesc:'Connecting campus and industry, cultivating talents with open source spirit',
     aboutCard1t:'Founded',aboutCard1d:'Jointly initiated by OpenAtom & Tencent',
     aboutCard2t:'Departments',aboutCard2d:'Outreach · Publicity · Projects · Org · Admin',
@@ -87,7 +87,7 @@ const T={
     proj2Name:'openEuler-Learning',proj2Desc:'Learning notes and practice projects for openEuler OS.',proj2Lang:'Shell · Python',
     proj3Name:'OpenTenBase-Contributions',proj3Desc:'Database kernel contributions and award-winning solutions.',proj3Lang:'C++',
     proj4Name:'View All',proj4Desc:'Browse all open source projects and join our contributions.',proj4Lang:'→ GitHub',
-    footerJoin:'Join Us',footerDesc:'KC Open Source Club · Open for Brilliance, Source for Future',
+    footerJoin:'Join Us',footerDesc:'CDUESTC OPEN SOURCE CLUB · Open for Brilliance, Source for Future',
     followLabel:'Follow Us',
     navAbout:'About',navTech:'Tech',navEvents:'Events',navMembers:'Members',navProjects:'Projects',
     mTitle:'Join KC Open Source',mSub:'Fill in your info and we will contact you via email',
@@ -102,7 +102,7 @@ const T={
 };
 
 function applyLang(){
-  const d=T[lang];document.title=lang=='zh'?'科成开放原子开源社团':'KC Open Source Club';
+  const d=T[lang];document.title=lang=='zh'?'科成开放原子开源社团':'CDUESTC OPEN SOURCE CLUB';
   const ids=['heroTitle','heroSub','heroScroll','aboutTitle','aboutDesc','aboutCard1t','aboutCard1d','aboutCard2t','aboutCard2d','aboutCard3t','aboutCard3d','techTitle','techDesc','techCard1','techCard1t','techCard1Tag','techCard2','techCard2t','techCard2Tag','techCard3','techCard3t','techCard3Tag','eventsTitle','eventsDesc','event1t','event1d','event1Date','event1Meta','event2t','event2d','event2Date','event2Meta','event3t','event3d','event3Date','event3Meta','event4t','event4d','event4Date','event4Meta','event5t','event5d','event5Date','event5Meta','membersTitle','membersDesc','member1Title','member2Title','member3Title','member4Title','member5Title','role1','role2','role3','role4','role5','honorsTitle','honorsDesc','honor1','honor1Desc','honor2','honor2Desc','honor3','honor3Desc','honor4','honor4Desc','projectsTitle','projectsDesc','proj1Name','proj1Desc','proj1Lang','proj2Name','proj2Desc','proj2Lang','proj3Name','proj3Desc','proj3Lang','proj4Name','proj4Desc','proj4Lang','footerJoin','footerDesc','followLabel','navAbout','navTech','navEvents','navMembers','navProjects','mTitle','mSub','mNameLabel','mEmailLabel','mDeptLabel','mMsgLabel','mHint','mCancel','mSubmit'];
   for(const k of ids){const el=document.getElementById(k);if(el)el.textContent=d[k];}
   document.getElementById('mName').placeholder=d.mNamePh;
