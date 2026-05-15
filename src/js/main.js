@@ -169,6 +169,9 @@ function submitJoin(){
 }
 document.getElementById('joinModal').addEventListener('click',e=>{if(e.target===document.getElementById('joinModal'))closeJoin();});
 
+/* ===== QR CODE EXPAND ===== */
+function toggleQrExpand(){document.getElementById('followUs').classList.toggle('expanded');}
+
 /* ===== WEBGL HERO SHADER ===== */
 (function(){
   const c=document.getElementById('heroCanvas');

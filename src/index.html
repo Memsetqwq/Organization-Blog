@@ -296,9 +296,14 @@
     <div class="links">
       <button onclick="openJoin()" id="footerJoin">加入我们</button>
       <a href="https://github.com/CDUESTC-OpenAtom-Open-Source-Club" target="_blank" rel="noopener">GitHub</a>
-      <div class="follow-us">
+      <div class="follow-us" id="followUs" onclick="toggleQrExpand()">
         <span class="follow-label" id="followLabel">关注我们</span>
-        <img src="../社团微信公众号二维码.png" alt="微信公众号二维码" class="qr-code">
+        <div class="qr-wrapper">
+          <img src="../社团微信公众号二维码.png" alt="微信公众号二维码" class="qr-code qr-small">
+          <div class="qr-expand-box">
+            <img src="../社团微信公众号二维码.png" alt="微信公众号二维码" class="qr-code qr-large">
+          </div>
+        </div>
       </div>
     </div>
   </div>
