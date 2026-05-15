@@ -170,7 +170,12 @@ function submitJoin(){
 document.getElementById('joinModal').addEventListener('click',e=>{if(e.target===document.getElementById('joinModal'))closeJoin();});
 
 /* ===== QR CODE EXPAND ===== */
-function toggleQrExpand(){document.getElementById('followUs').classList.toggle('expanded');}
+function toggleQrExpand(){
+  const followUs=document.getElementById('followUs');
+  const footer=document.getElementById('footer');
+  followUs.classList.toggle('expanded');
+  footer.classList.toggle('expanded');
+}
 
 /* ===== WEBGL HERO SHADER ===== */
 (function(){
