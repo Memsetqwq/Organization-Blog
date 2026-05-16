@@ -201,17 +201,33 @@
     if (valid) {
       currentUser = { username };
       sessionStorage.setItem('cduestc_admin_session', JSON.stringify(currentUser));
-      showDashboard();
+      // Fade out and slide down login modal, then show dashboard
+      const loginOverlay = document.getElementById('loginOverlay');
+      const loginBox = loginOverlay.querySelector('.login-box');
+      loginBox.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      loginBox.style.opacity = '0';
+      loginBox.style.transform = 'translateY(20px)';
+      loginOverlay.style.transition = 'opacity 0.5s ease';
+      loginOverlay.style.opacity = '0';
+      setTimeout(function() {
+        loginOverlay.style.display = 'none';
+        loginBox.style.transition = '';
+        loginBox.style.opacity = '';
+        loginBox.style.transform = '';
+        loginOverlay.style.transition = '';
+        loginOverlay.style.opacity = '';
+        showDashboard();
+      }, 500);
     } else {
       document.getElementById('loginError').style.display = 'block';
     }
   };
 
-  // Logout handler
+  // Logout handler - redirect to index
   window.handleLogout = function() {
     currentUser = null;
     sessionStorage.removeItem('cduestc_admin_session');
-    showLogin();
+    window.location.href = 'index.html';
   };
 
   // Cancel login - just close modal
@@ -227,13 +243,6 @@
   document.addEventListener('keydown', function(e) {
     // Reserved for future keyboard shortcuts if needed
   });
-
-  // Show dashboard
-  function showDashboard() {
-    document.getElementById('dashboard').style.display = 'block';
-    document.getElementById('adminUsername').textContent = currentUser.username;
-    loadApplications();
-  }
 
   // Load applications
   function loadApplications() {
