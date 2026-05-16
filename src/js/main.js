@@ -1,4 +1,7 @@
-/* ===== I18N ===== */
+(function(){
+  'use strict';
+
+  /* ===== I18N ===== */
 let lang='zh';
 const T={
   zh:{
@@ -162,20 +165,37 @@ function submitJoin(){
   const deptNames={projects:'项目部',outreach:'外联部',publicity:'宣策部',org:'组织部',admin:'秘书处','':'未选择'};
   const deptNameEn={projects:'Project Dept',outreach:'Outreach',publicity:'Publicity',org:'Organization',admin:'Secretariat','':'Not selected'};
   const dpt=lang=='zh'?deptNames[dept]:deptNameEn[dept];
-  const subject=lang=='zh'?`加入社团申请 - ${name}`:`Join Application - ${name}`;
-  const body=`姓名 / Name: ${name}%0D%0A邮箱 / Email: ${email}%0D%0A意向部门 / Department: ${dpt}%0D%0A%0D%0A申请理由 / Reason:%0D%0A${msg}`;
+  // Encode user input for mailto URL
+  const encName=encodeURIComponent(name);
+  const encEmail=encodeURIComponent(email);
+  const encDept=encodeURIComponent(dpt);
+  const encMsg=encodeURIComponent(msg).replace(/%0A/g,'%0D%0A');
+  const subject=lang==='zh'?`加入社团申请 - ${encName}`:`Join Application - ${encName}`;
+  const body=`姓名 / Name: ${encName}%0D%0A邮箱 / Email: ${encEmail}%0D%0A意向部门 / Department: ${encDept}%0D%0A%0D%0A申请理由 / Reason:%0D%0A${encMsg}`;
   window.location.href=`mailto:2767394183@qq.com?subject=${encodeURIComponent(subject)}&body=${body}`;
   closeJoin();
 }
 document.getElementById('joinModal').addEventListener('click',e=>{if(e.target===document.getElementById('joinModal'))closeJoin();});
 
 /* ===== QR CODE EXPAND ===== */
+let qrExpanded = false;
 function toggleQrExpand(){
   const followUs=document.getElementById('followUs');
   const footer=document.getElementById('footer');
-  followUs.classList.toggle('expanded');
-  footer.classList.toggle('expanded');
+  qrExpanded = !qrExpanded;
+  followUs.classList.toggle('expanded', qrExpanded);
+  footer.classList.toggle('expanded', qrExpanded);
 }
+// Close QR expand when clicking outside
+document.addEventListener('click', function(e) {
+  if (!qrExpanded) return;
+  const followUs = document.getElementById('followUs');
+  if (!followUs.contains(e.target)) {
+    qrExpanded = false;
+    followUs.classList.remove('expanded');
+    footer.classList.remove('expanded');
+  }
+});
 
 /* ===== WEBGL HERO SHADER ===== */
 (function(){
@@ -184,9 +204,15 @@ function toggleQrExpand(){
   let gl;try{gl=c.getContext('webgl')||c.getContext('experimental-webgl')}catch(e){return}
   if(!gl)return;
   const isLight=()=>document.documentElement.getAttribute('data-theme')==='light';
+  // Track WebGL resources for proper cleanup
+  let aid;
+  let buffer;
+  const shaders=[];
+  let themeObs;
+  let resizeHandler;
   try{
-    function rs(){const d=Math.min(window.devicePixelRatio||1,2);c.width=c.clientWidth*d;c.height=c.clientHeight*d;gl.viewport(0,0,c.width,c.height)}
-    rs();
+    function rs(){const d=Math.min(window.devicePixelRatio||1,2);c.width=c.clientWidth*d;c.height=c.clientHeight*d;gl.viewport(0,0,c.width,c.height);}
+    rs();resizeHandler=rs;
     const vs=`attribute vec4 aPos;void main(){gl_Position=aPos;}`;
     const fsLight=`precision mediump float;uniform float uT;uniform vec2 uR;
 	float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
@@ -198,20 +224,35 @@ function toggleQrExpand(){
 	float n(vec2 p){vec2 i=floor(p),f=fract(p);float a=h(i),b=h(i+vec2(1,0)),c=h(i+vec2(0,1)),d=h(i+vec2(1,1));vec2 u=f*f*(3.-2.*f);return mix(a,b,u.x)+(c-a)*u.y*(1.-u.x)+(d-b)*u.x*u.y;}
 	float f(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p*=2.;a*=.5;}return v;}
 	void main(){vec2 uv=gl_FragCoord.xy/uR;float t=uT*.00012,p=smoothstep(.3,.7,f(vec2(uv.x*3.+t,uv.y*2.-.5*t))*.5+f(vec2(uv.x*2.-.7*t,uv.y*3.+.3*t))*.3+f(vec2(uv.x*5.+.4*t,uv.y*4.-.6*t))*.2);p*=1.-smoothstep(.2,.8,length(uv-.5));float g=h(gl_FragCoord.xy+uT*.001)*.1-.05;vec3 col=vec3(.04,.06,.12)*p*1.2+g;col+=vec3(.15,.22,.45)*.08;gl_FragColor=vec4(col,1.);}`;
-    function cmp(s,t){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
+    function cmp(s,t){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);shaders.push(sh);return sh;}
     let prog=gl.createProgram();gl.attachShader(prog,cmp(vs,gl.VERTEX_SHADER));gl.attachShader(prog,cmp(isLight()?fsLight:fsDark,gl.FRAGMENT_SHADER));gl.linkProgram(prog);
     if(!gl.getProgramParameter(prog,gl.LINK_STATUS))return;gl.useProgram(prog);
-    const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
     const ap=gl.getAttribLocation(prog,'aPos');gl.enableVertexAttribArray(ap);gl.vertexAttribPointer(ap,2,gl.FLOAT,false,0,0);
-    let ut=gl.getUniformLocation(prog,'uT'),ur=gl.getUniformLocation(prog,'uR');let aid;
+    let ut=gl.getUniformLocation(prog,'uT'),ur=gl.getUniformLocation(prog,'uR');
     function rfn(tm){gl.uniform1f(ut,tm);gl.uniform2f(ur,c.width,c.height);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);aid=requestAnimationFrame(rfn);}
-    aid=requestAnimationFrame(rfn);window.addEventListener('resize',rs);
+    aid=requestAnimationFrame(rfn);window.addEventListener('resize',resizeHandler);
+    // Cleanup function for WebGL resources
+    function cleanup(){
+      if(aid){cancelAnimationFrame(aid);aid=null;}
+      if(resizeHandler){window.removeEventListener('resize',resizeHandler);resizeHandler=null;}
+      if(themeObs){themeObs.disconnect();themeObs=null;}
+      shaders.forEach(s=>gl.deleteShader(s));shaders.length=0;
+      if(buffer){gl.deleteBuffer(buffer);buffer=null;}
+    }
+    window.addEventListener('beforeunload',cleanup);
     // Theme change listener
-    const themeObs=new MutationObserver(()=>{
+    themeObs=new MutationObserver(()=>{
       const newFs=isLight()?fsLight:fsDark;
       const newProg=gl.createProgram();
       gl.attachShader(newProg,cmp(vs,gl.VERTEX_SHADER));gl.attachShader(newProg,cmp(newFs,gl.FRAGMENT_SHADER));gl.linkProgram(newProg);
-      if(gl.getProgramParameter(newProg,gl.LINK_STATUS)){gl.deleteProgram(prog);prog=newProg;gl.useProgram(prog);ut=gl.getUniformLocation(prog,'uT');ur=gl.getUniformLocation(prog,'uR');}
+      if(gl.getProgramParameter(newProg,gl.LINK_STATUS)){
+        // Delete old program and its attached shaders before creating new ones
+        const oldShaders=gl.getAttachedShaders(prog);
+        oldShaders.forEach(s=>gl.deleteShader(s));
+        gl.deleteProgram(prog);
+        prog=newProg;gl.useProgram(prog);ut=gl.getUniformLocation(prog,'uT');ur=gl.getUniformLocation(prog,'uR');
+      }
     });
     themeObs.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   }catch(e){}
@@ -227,3 +268,5 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 
 // Trigger hero animation on load
 document.querySelector('.hero')?.classList.add('in-view');
+
+})();
