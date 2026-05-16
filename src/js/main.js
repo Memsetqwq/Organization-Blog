@@ -161,26 +161,50 @@ window.submitJoin = function() {
   const email = document.getElementById('mEmail').value.trim();
   const dept = document.getElementById('mDept').value;
   const msg = document.getElementById('mMsg').value.trim();
-  if(!name || !email || !msg) {alert(lang=='zh' ? '请填写完整信息' : 'Please fill in all fields'); return;}
-  const deptNames = {projects:'项目部',outreach:'外联部',publicity:'宣策部',org:'组织部',admin:'秘书处','':'未选择'};
-  const deptNameEn = {projects:'Project Dept',outreach:'Outreach',publicity:'Publicity',org:'Organization',admin:'Secretariat','':'Not selected'};
-  const dpt = lang=='zh' ? deptNames[dept] : deptNameEn[dept];
-  const encName = encodeURIComponent(name);
-  const encEmail = encodeURIComponent(email);
-  const encDept = encodeURIComponent(dpt);
-  const encMsg = encodeURIComponent(msg).replace(/%0A/g, '%0D%0A');
-  const subject = lang==='zh' ? `加入社团申请 - ${encName}` : `Join Application - ${encName}`;
-  const body = `姓名 / Name: ${encName}%0D%0A邮箱 / Email: ${encEmail}%0D%0A意向部门 / Department: ${encDept}%0D%0A%0D%0A申请理由 / Reason:%0D%0A${encMsg}`;
-
-  // Check if email is QQ email - open QQ mail web version instead of mailto
-  const isQQEmail = /^[^@]+@qq\.com$/i.test(email);
-  if(isQQEmail) {
-    const qqMailUrl = `https://mail.qq.com/cgi-bin/compose.cgi?subject=${encodeURIComponent(subject)}&body=${body}&to=2767394183@qq.com`;
-    window.open(qqMailUrl, '_blank');
-  } else {
-    window.location.href = `mailto:2767394183@qq.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+  if (!name || !email || !msg) {
+    alert(lang === 'zh' ? '请填写完整信息' : 'Please fill in all fields');
+    return;
   }
+
+  // 检查邮箱格式
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert(lang === 'zh' ? '请输入有效的邮箱地址' : 'Please enter a valid email address');
+    return;
+  }
+
+  // 检查是否已有该邮箱的申请记录
+  const existing = DB.findByEmail(email);
+  if (existing) {
+    const confirmMsg = lang === 'zh'
+      ? `该邮箱 ${email} 已有申请记录，是否覆盖？`
+      : `Email ${email} already has a record. Overwrite?`;
+    if (!confirm(confirmMsg)) {
+      return;
+    }
+    // 删除旧记录
+    DB.deleteApplication(existing.id);
+  }
+
+  // 保存申请到数据库
+  const appData = {
+    name: name,
+    email: email,
+    dept: dept,
+    message: msg
+  };
+
+  DB.addApplication(appData);
+
+  // 显示成功提示
+  alert(lang === 'zh' ? '申请已提交，感谢您的加入！' : 'Application submitted! Thank you!');
   closeJoin();
+
+  // 清空表单
+  document.getElementById('mName').value = '';
+  document.getElementById('mEmail').value = '';
+  document.getElementById('mDept').value = '';
+  document.getElementById('mMsg').value = '';
 };
 document.getElementById('joinModal').addEventListener('click',e=>{if(e.target===document.getElementById('joinModal'))closeJoin();});
 
