@@ -95,6 +95,8 @@
       <div class="num" id="statToday">0</div>
       <div class="label">今日新增</div>
     </div>
+  </div>
+  <div class="stats-grid" style="margin-top:0;">
     <div class="stat-card">
       <div class="num" id="statProjects">0</div>
       <div class="label">项目部</div>
@@ -102,6 +104,18 @@
     <div class="stat-card">
       <div class="num" id="statOutreach">0</div>
       <div class="label">外联部</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statPublicity">0</div>
+      <div class="label">宣策部</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statOrg">0</div>
+      <div class="label">组织部</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statAdmin">0</div>
+      <div class="label">秘书处</div>
     </div>
   </div>
 
@@ -258,6 +272,9 @@
     document.getElementById('statToday').textContent = stats.today;
     document.getElementById('statProjects').textContent = stats.departments.projects || 0;
     document.getElementById('statOutreach').textContent = stats.departments.outreach || 0;
+    document.getElementById('statPublicity').textContent = stats.departments.publicity || 0;
+    document.getElementById('statOrg').textContent = stats.departments.org || 0;
+    document.getElementById('statAdmin').textContent = stats.departments.admin || 0;
   }
 
   // Render list
