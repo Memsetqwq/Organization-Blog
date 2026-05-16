@@ -92,8 +92,12 @@
 
   // 管理员验证
   function verifyAdmin(username, password) {
-    initDB();
-    const admin = JSON.parse(localStorage.getItem(ADMIN_KEY) || '{}');
+    const admin = JSON.parse(localStorage.getItem(ADMIN_KEY) || 'null');
+    // 如果没有存储的管理员数据，或者数据格式不正确，使用默认值重置
+    if (!admin || typeof admin.username !== 'string' || typeof admin.password !== 'string') {
+      localStorage.setItem(ADMIN_KEY, JSON.stringify(DEFAULT_ADMIN));
+      return username === DEFAULT_ADMIN.username && password === DEFAULT_ADMIN.password;
+    }
     return admin.username === username && admin.password === password;
   }
 

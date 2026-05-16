@@ -159,9 +159,36 @@
   function checkAuth() {
     const session = sessionStorage.getItem('cduestc_admin_session');
     if (session) {
-      currentUser = JSON.parse(session);
-      showDashboard();
+      try {
+        currentUser = JSON.parse(session);
+        if (currentUser && currentUser.username) {
+          showDashboard();
+        } else {
+          showLogin();
+        }
+      } catch (e) {
+        showLogin();
+      }
+    } else {
+      showLogin();
     }
+  }
+
+  // Show login modal
+  function showLogin() {
+    document.getElementById('loginOverlay').style.display = 'flex';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('loginError').style.display = 'none';
+  }
+
+  // Show dashboard
+  function showDashboard() {
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    document.getElementById('adminUsername').textContent = currentUser.username;
+    loadApplications();
   }
 
   // Login handler
@@ -174,36 +201,31 @@
     if (valid) {
       currentUser = { username };
       sessionStorage.setItem('cduestc_admin_session', JSON.stringify(currentUser));
-      document.getElementById('loginOverlay').style.display = 'none';
       showDashboard();
     } else {
       document.getElementById('loginError').style.display = 'block';
     }
   };
 
-  // Cancel login - just close modal
-  window.closeLoginModal = function() {
-    document.getElementById('loginOverlay').style.display = 'none';
-  };
-
   // Logout handler
   window.handleLogout = function() {
     currentUser = null;
     sessionStorage.removeItem('cduestc_admin_session');
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('loginOverlay').style.display = 'flex';
-    document.getElementById('username').value = '';
-    document.getElementById('password').value = '';
+    showLogin();
   };
 
-  // ESC key to close login modal only
+  // Cancel login - just close modal
+  window.closeLoginModal = function() {
+    // Don't allow closing login modal - it's required
+    // Instead just clear the fields
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('loginError').style.display = 'none';
+  };
+
+  // ESC key does nothing on login page - user must login
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      const loginOverlay = document.getElementById('loginOverlay');
-      if (loginOverlay && loginOverlay.style.display !== 'none') {
-        closeLoginModal();
-      }
-    }
+    // Reserved for future keyboard shortcuts if needed
   });
 
   // Show dashboard
