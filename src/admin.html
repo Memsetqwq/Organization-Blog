@@ -66,9 +66,12 @@
 <!-- Login Modal -->
 <div class="login-overlay" id="loginOverlay">
   <div class="login-box">
+    <div style="position:absolute;top:16px;right:16px;">
+      <button onclick="handleLoginCancel()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-2);">&times;</button>
+    </div>
     <h2>管理员登录</h2>
     <input type="text" id="username" placeholder="用户名" autocomplete="off">
-    <input type="password" id="password" placeholder="密码" autocomplete="off">
+    <input type="password" id="password" placeholder="密码" autocomplete="off" onkeydown="if(event.key==='Enter')handleLogin()">
     <button onclick="handleLogin()">登录</button>
     <p class="login-error" id="loginError">用户名或密码错误</p>
   </div>
@@ -154,14 +157,6 @@
   let deleteTargetId = null;
   const deptNames = {projects:'项目部',outreach:'外联部',publicity:'宣策部',org:'组织部',admin:'秘书处','':'未选择'};
 
-  // Simple hash function for demo (use proper hashing in production)
-  function sha256(str) {
-    const buffer = new TextEncoder().encode(str);
-    return crypto.subtle.digest('SHA-256', buffer).then(h => {
-      return Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2,'0')).join('');
-    });
-  }
-
   // Check if already logged in
   function checkAuth() {
     const session = sessionStorage.getItem('cduestc_admin_session');
@@ -172,13 +167,12 @@
   }
 
   // Login handler
-  window.handleLogin = async function() {
+  window.handleLogin = function() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     if (!username || !password) return;
 
-    const hash = await sha256(password);
-    const valid = DB.verifyAdmin(username, hash);
+    const valid = DB.verifyAdmin(username, password);
     if (valid) {
       currentUser = { username };
       sessionStorage.setItem('cduestc_admin_session', JSON.stringify(currentUser));
@@ -187,6 +181,11 @@
     } else {
       document.getElementById('loginError').style.display = 'block';
     }
+  };
+
+  // Cancel login / go back
+  window.handleLoginCancel = function() {
+    window.location.href = 'index.html';
   };
 
   // Logout handler
@@ -198,6 +197,16 @@
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
   };
+
+  // ESC key to cancel login
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const loginOverlay = document.getElementById('loginOverlay');
+      if (loginOverlay && loginOverlay.style.display !== 'none') {
+        handleLoginCancel();
+      }
+    }
+  });
 
   // Show dashboard
   function showDashboard() {

@@ -8,12 +8,22 @@
   const DB_KEY = 'cduestc_applications';
   const ADMIN_KEY = 'cduestc_admin';
 
-  // 默认管理员密码（实际应用中应加密存储）
+  // 默认管理员账户
   const DEFAULT_ADMIN = {
     username: 'admin',
-    // 密码: admin123 (SHA256 hash for demo - in production use proper hashing)
-    passwordHash: '240be518fabd2724ddb6f04eeb9c5fe7e97d3fe8cc9c5e859be3e3b8b4a9c52'
+    password: 'admin123'
   };
+
+  // 简单的哈希函数用于存储（生产环境应使用更强的加密）
+  function simpleHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash.toString(16);
+  }
 
   // 初始化数据库
   function initDB() {
@@ -81,10 +91,10 @@
   }
 
   // 管理员验证
-  function verifyAdmin(username, passwordHash) {
+  function verifyAdmin(username, password) {
     initDB();
     const admin = JSON.parse(localStorage.getItem(ADMIN_KEY) || '{}');
-    return admin.username === username && admin.passwordHash === passwordHash;
+    return admin.username === username && admin.password === password;
   }
 
   // 获取统计数据

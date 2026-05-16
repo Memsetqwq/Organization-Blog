@@ -385,7 +385,7 @@ body{
 /* FOOTER */
 .footer{border-top:1px solid var(--border);padding:48px 28px;background:var(--bg);min-height:80px}
 .footer-inner{width:100%;padding:0 3%;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px}
-.footer p{font-size:13px;color:var(--text-2);font-weight:300;letter-spacing:.02em;margin-top:37px;margin-bottom:52px}
+.footer-inner p,.footer-inner>a{font-size:13px;color:var(--text-2);font-weight:300;letter-spacing:.02em;margin-top:37px;margin-bottom:52px}
 .footer .links{align-items:center;transition:none;display:flex;gap:28px;align-items:center}
 .footer .links a,.footer .links button{
   font-size:13px;color:var(--text-2);text-decoration:none;transition:color .25s;
