@@ -65,10 +65,8 @@
 <body>
 <!-- Login Modal -->
 <div class="login-overlay" id="loginOverlay">
-  <div class="login-box">
-    <div style="position:absolute;top:16px;right:16px;">
-      <button onclick="handleLoginCancel()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-2);">&times;</button>
-    </div>
+  <div class="login-box" style="position:relative;">
+    <button onclick="closeLoginModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-2);width:32px;height:32px;display:flex;align-items:center;justify-content:center;">&times;</button>
     <h2>管理员登录</h2>
     <input type="text" id="username" placeholder="用户名" autocomplete="off">
     <input type="password" id="password" placeholder="密码" autocomplete="off" onkeydown="if(event.key==='Enter')handleLogin()">
@@ -183,9 +181,9 @@
     }
   };
 
-  // Cancel login / go back
-  window.handleLoginCancel = function() {
-    window.location.href = 'index.html';
+  // Cancel login - just close modal
+  window.closeLoginModal = function() {
+    document.getElementById('loginOverlay').style.display = 'none';
   };
 
   // Logout handler
@@ -198,12 +196,12 @@
     document.getElementById('password').value = '';
   };
 
-  // ESC key to cancel login
+  // ESC key to close login modal only
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       const loginOverlay = document.getElementById('loginOverlay');
       if (loginOverlay && loginOverlay.style.display !== 'none') {
-        handleLoginCancel();
+        closeLoginModal();
       }
     }
   });
