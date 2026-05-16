@@ -112,7 +112,7 @@ function applyLang(){
   document.getElementById('mEmail').placeholder=d.mEmailPh;
   document.getElementById('mMsg').placeholder=d.mMsgPh;
 }
-function toggleLang(){lang=lang=='zh'?'en':'zh';document.getElementById('langBtn').textContent=lang=='zh'?'EN':'中';applyLang();}
+window.toggleLang = function() {lang=lang=='zh'?'en':'zh';document.getElementById('langBtn').textContent=lang=='zh'?'EN':'中';applyLang();}
 
 /* ===== SCROLL ANIMATION ===== */
 let lastScrollY=0;
@@ -154,34 +154,41 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 
 /* ===== JOIN MODAL ===== */
-function openJoin(){document.getElementById('joinModal').classList.add('on');document.body.style.overflow='hidden';}
-function closeJoin(){document.getElementById('joinModal').classList.remove('on');document.body.style.overflow='';}
-function submitJoin(){
-  const name=document.getElementById('mName').value.trim();
-  const email=document.getElementById('mEmail').value.trim();
-  const dept=document.getElementById('mDept').value;
-  const msg=document.getElementById('mMsg').value.trim();
-  if(!name||!email||!msg){alert(lang=='zh'?'请填写完整信息':'Please fill in all fields');return;}
-  const deptNames={projects:'项目部',outreach:'外联部',publicity:'宣策部',org:'组织部',admin:'秘书处','':'未选择'};
-  const deptNameEn={projects:'Project Dept',outreach:'Outreach',publicity:'Publicity',org:'Organization',admin:'Secretariat','':'Not selected'};
-  const dpt=lang=='zh'?deptNames[dept]:deptNameEn[dept];
-  // Encode user input for mailto URL
-  const encName=encodeURIComponent(name);
-  const encEmail=encodeURIComponent(email);
-  const encDept=encodeURIComponent(dpt);
-  const encMsg=encodeURIComponent(msg).replace(/%0A/g,'%0D%0A');
-  const subject=lang==='zh'?`加入社团申请 - ${encName}`:`Join Application - ${encName}`;
-  const body=`姓名 / Name: ${encName}%0D%0A邮箱 / Email: ${encEmail}%0D%0A意向部门 / Department: ${encDept}%0D%0A%0D%0A申请理由 / Reason:%0D%0A${encMsg}`;
-  window.location.href=`mailto:2767394183@qq.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+window.openJoin = function() {document.getElementById('joinModal').classList.add('on');document.body.style.overflow='hidden';};
+window.closeJoin = function() {document.getElementById('joinModal').classList.remove('on');document.body.style.overflow='';};
+window.submitJoin = function() {
+  const name = document.getElementById('mName').value.trim();
+  const email = document.getElementById('mEmail').value.trim();
+  const dept = document.getElementById('mDept').value;
+  const msg = document.getElementById('mMsg').value.trim();
+  if(!name || !email || !msg) {alert(lang=='zh' ? '请填写完整信息' : 'Please fill in all fields'); return;}
+  const deptNames = {projects:'项目部',outreach:'外联部',publicity:'宣策部',org:'组织部',admin:'秘书处','':'未选择'};
+  const deptNameEn = {projects:'Project Dept',outreach:'Outreach',publicity:'Publicity',org:'Organization',admin:'Secretariat','':'Not selected'};
+  const dpt = lang=='zh' ? deptNames[dept] : deptNameEn[dept];
+  const encName = encodeURIComponent(name);
+  const encEmail = encodeURIComponent(email);
+  const encDept = encodeURIComponent(dpt);
+  const encMsg = encodeURIComponent(msg).replace(/%0A/g, '%0D%0A');
+  const subject = lang==='zh' ? `加入社团申请 - ${encName}` : `Join Application - ${encName}`;
+  const body = `姓名 / Name: ${encName}%0D%0A邮箱 / Email: ${encEmail}%0D%0A意向部门 / Department: ${encDept}%0D%0A%0D%0A申请理由 / Reason:%0D%0A${encMsg}`;
+
+  // Check if email is QQ email - open QQ mail web version instead of mailto
+  const isQQEmail = /^[^@]+@qq\.com$/i.test(email);
+  if(isQQEmail) {
+    const qqMailUrl = `https://mail.qq.com/cgi-bin/compose.cgi?subject=${encodeURIComponent(subject)}&body=${body}&to=2767394183@qq.com`;
+    window.open(qqMailUrl, '_blank');
+  } else {
+    window.location.href = `mailto:2767394183@qq.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+  }
   closeJoin();
-}
+};
 document.getElementById('joinModal').addEventListener('click',e=>{if(e.target===document.getElementById('joinModal'))closeJoin();});
 
 /* ===== QR CODE EXPAND ===== */
 let qrExpanded = false;
-function toggleQrExpand(){
-  const followUs=document.getElementById('followUs');
-  const footer=document.getElementById('footer');
+window.toggleQrExpand = function() {
+  const followUs = document.getElementById('followUs');
+  const footer = document.getElementById('footer');
   qrExpanded = !qrExpanded;
   followUs.classList.toggle('expanded', qrExpanded);
   footer.classList.toggle('expanded', qrExpanded);
