@@ -13,3 +13,27 @@ Thumbs.db
 node_modules/
 dist/
 .parcel-cache/
+
+# Environment & Secrets (禁止推送)
+.env
+.env.*
+*.env
+.env.local
+.env.development
+.env.production
+.secrets
+credentials.*
+config.json
+config.local.json
+*.pem
+*.key
+id_rsa
+id_rsa.*
+known_hosts
+.npmrc
+.pypirc
+.git-credentials
+netrc
+*.sqlite
+*.db
+database.yml
