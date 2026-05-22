@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>新闻动态 - 科成开放原子开源社团</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="./css/theme.css">
+</head>
+<body>
+
+<nav class="nav nav-scrolled" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="../社团图标.jpg" alt="" class="nav-logo-img" onerror="this.style.display='none'">
+      <span class="nav-logo-text">科成开源</span>
+    </a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <div class="links" id="navLinks">
+      <a href="index.html" data-page="home" id="navHome">首页</a>
+      <a href="about.html" data-page="about" id="navAbout">社团简介</a>
+      <a href="news.html" data-page="news" class="active" id="navNews">新闻动态</a>
+      <a href="projects.html" data-page="projects" id="navProjects">导航站</a>
+      <a href="login.html" data-page="login" id="navLogin">登录</a>
+      <div class="nav-ext">预留1</div>
+      <div class="nav-ext">预留2</div>
+    </div>
+    <div class="ctrl">
+      <div class="theme-toggle-wrap" title="切换主题">
+        <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="切换明暗主题" type="button">
+          <div class="clouds"><div class="cloud c1"></div><div class="cloud c2"></div></div>
+          <div class="stars"><div class="star s1"></div><div class="star s2"></div><div class="star s3"></div><div class="star s4"></div><div class="star s5"></div></div>
+          <div class="toggle-orb"></div>
+        </button>
+      </div>
+      <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+    </div>
+  </div>
+</nav>
+
+<main class="section" style="padding-top:120px">
+  <div class="sec-head">
+    <h1 class="an">新闻动态</h1>
+    <p class="an d2">每一次实践，都是向开源世界更近一步</p>
+  </div>
+
+  <div class="news-grid" id="newsGrid"></div>
+
+  <div style="text-align:center;margin-top:48px">
+    <button class="lang-btn an d3" onclick="loadMoreNews()" id="loadMoreBtn" style="padding:12px 32px;display:none">加载更多</button>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="admin.html">科成开放原子开源社团 · 因开放而精彩，因开源而未来</a>
+      <p class="copyright">© 2026 电子科技大学成都学院开放原子开源社团 版权所有</p>
+    </div>
+  </div>
+</footer>
+
+<script src="./js/theme.js"></script>
+<script src="./js/main.js"></script>
+<script>
+let allNews = [];
+let displayedCount = 6;
+
+async function loadNews() {
+  try {
+    const res = await fetch('./data/news.json');
+    allNews = await res.json();
+    renderNews();
+  } catch (e) {
+    console.error('Failed to load news:', e);
+  }
+}
+
+function renderNews() {
+  const grid = document.getElementById('newsGrid');
+  const newsToShow = allNews.slice(0, displayedCount);
+  grid.innerHTML = newsToShow.map((item, i) => `
+    <article class="news-card an d${(i % 6) + 1}" onclick="location.href='news-detail.html?id=${item.id}'">
+      <div class="news-img">
+        <img src="${item.cover}" alt="${item.title}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23161B22%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%238B949E%22 font-size=%2212%22>封面图</text></svg>'">
+      </div>
+      <div class="news-content">
+        <div class="news-date">${item.date} · ${item.category}</div>
+        <h3>${item.title}</h3>
+        <p>${item.summary}</p>
+        <span class="news-tag">${item.tags[0]}</span>
+      </div>
+    </article>
+  `).join('');
+
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  if (displayedCount < allNews.length) {
+    loadMoreBtn.style.display = 'inline-block';
+  }
+
+  // Trigger animations
+  setTimeout(() => {
+    document.querySelectorAll('.news-card.an').forEach(el => el.classList.add('in'));
+  }, 100);
+}
+
+function loadMoreNews() {
+  displayedCount += 6;
+  renderNews();
+}
+
+document.addEventListener('DOMContentLoaded', loadNews);
+</script>
+</body>
+</html>

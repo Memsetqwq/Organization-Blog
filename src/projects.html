@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>导航站 - 科成开放原子开源社团</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="./css/theme.css">
+</head>
+<body>
+
+<nav class="nav nav-scrolled" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="../社团图标.jpg" alt="" class="nav-logo-img" onerror="this.style.display='none'">
+      <span class="nav-logo-text">科成开源</span>
+    </a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <div class="links" id="navLinks">
+      <a href="index.html" data-page="home" id="navHome">首页</a>
+      <a href="about.html" data-page="about" id="navAbout">社团简介</a>
+      <a href="news.html" data-page="news" id="navNews">新闻动态</a>
+      <a href="projects.html" data-page="projects" class="active" id="navProjects">导航站</a>
+      <a href="login.html" data-page="login" id="navLogin">登录</a>
+      <div class="nav-ext">预留1</div>
+      <div class="nav-ext">预留2</div>
+    </div>
+    <div class="ctrl">
+      <div class="theme-toggle-wrap" title="切换主题">
+        <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="切换明暗主题" type="button">
+          <div class="clouds"><div class="cloud c1"></div><div class="cloud c2"></div></div>
+          <div class="stars"><div class="star s1"></div><div class="star s2"></div><div class="star s3"></div><div class="star s4"></div><div class="star s5"></div></div>
+          <div class="toggle-orb"></div>
+        </button>
+      </div>
+      <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+    </div>
+  </div>
+</nav>
+
+<main class="section" style="padding-top:120px">
+  <div class="sec-head">
+    <h1 class="an">导航站</h1>
+    <p class="an d2">精选开源资源与技术链接</p>
+  </div>
+
+  <div class="links-grid" style="max-width:900px;margin:0 auto">
+    <a href="https://www.openharmony.cn/" target="_blank" rel="noopener" class="link-card an d1">
+      <div class="link-icon">📱</div>
+      <h4>OpenHarmony</h4>
+      <p>开源鸿蒙分布式操作系统官方网站</p>
+    </a>
+    <a href="https://www.openeuler.org/" target="_blank" rel="noopener" class="link-card an d2">
+      <div class="link-icon">💻</div>
+      <h4>openEuler</h4>
+      <p>企业级Linux操作系统开源社区</p>
+    </a>
+    <a href="https://www.opentenbase.org/" target="_blank" rel="noopener" class="link-card an d3">
+      <div class="link-icon">🗄️</div>
+      <h4>OpenTenBase</h4>
+      <p>腾讯开源数据库内核社区</p>
+    </a>
+    <a href="https://openatom.org/" target="_blank" rel="noopener" class="link-card an d4">
+      <div class="link-icon">🏛️</div>
+      <h4>开放原子开源基金会</h4>
+      <p>开源公益基金会官方网站</p>
+    </a>
+    <a href="https://github.com/CDUESTC-OpenAtom-Open-Source-Club" target="_blank" rel="noopener" class="link-card an d5">
+      <div class="link-icon">🐙</div>
+      <h4>GitHub 仓库</h4>
+      <p>社团开源项目代码仓库</p>
+    </a>
+    <a href="https://gitee.com/cduestc-open-atom" target="_blank" rel="noopener" class="link-card an d6">
+      <div class="link-icon">🐱</div>
+      <h4>Gitee 仓库</h4>
+      <p>社团开源项目代码仓库（国内镜像）</p>
+    </a>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="admin.html">科成开放原子开源社团 · 因开放而精彩，因开源而未来</a>
+      <p class="copyright">© 2026 电子科技大学成都学院开放原子开源社团 版权所有</p>
+    </div>
+  </div>
+</footer>
+
+<script src="./js/theme.js"></script>
+<script src="./js/main.js"></script>
+</body>
+</html>

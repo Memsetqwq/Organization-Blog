@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>社团简介 - 科成开放原子开源社团</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="./css/theme.css">
+</head>
+<body>
+
+<nav class="nav nav-scrolled" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="../社团图标.jpg" alt="" class="nav-logo-img" onerror="this.style.display='none'">
+      <span class="nav-logo-text">科成开源</span>
+    </a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <div class="links" id="navLinks">
+      <a href="index.html" data-page="home" id="navHome">首页</a>
+      <a href="about.html" data-page="about" class="active" id="navAbout">社团简介</a>
+      <a href="news.html" data-page="news" id="navNews">新闻动态</a>
+      <a href="projects.html" data-page="projects" id="navProjects">导航站</a>
+      <a href="login.html" data-page="login" id="navLogin">登录</a>
+      <div class="nav-ext">预留1</div>
+      <div class="nav-ext">预留2</div>
+    </div>
+    <div class="ctrl">
+      <div class="theme-toggle-wrap" title="切换主题">
+        <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="切换明暗主题" type="button">
+          <div class="clouds"><div class="cloud c1"></div><div class="cloud c2"></div></div>
+          <div class="stars"><div class="star s1"></div><div class="star s2"></div><div class="star s3"></div><div class="star s4"></div><div class="star s5"></div></div>
+          <div class="toggle-orb"></div>
+        </button>
+      </div>
+      <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+    </div>
+  </div>
+</nav>
+
+<main class="section" style="padding-top:120px">
+  <div class="sec-head">
+    <h1 class="an">关于社团</h1>
+    <p class="an d2">科成开放原子开源社团成立于2024年，由开放原子开源基金会联合腾讯共同发起</p>
+  </div>
+
+  <div class="about-detail" style="max-width:900px;margin:0 auto">
+    <section class="about-section">
+      <h2 class="an">社团简介</h2>
+      <p class="an d1">科成开放原子开源社团是由电子科技大学成都学院学生自发组织的开源技术社团。社团致力于推广开源文化，培养学生的开源精神和实践能力，连接校园与产业，为中国开源生态发展贡献力量。</p>
+    </section>
+
+    <section class="about-section">
+      <h2 class="an">组织架构</h2>
+      <div class="tech-grid">
+        <div class="tech-card an d1">
+          <div class="info">
+            <h4>项目部</h4>
+            <p>负责技术开发与开源项目维护，参与实际开源项目贡献</p>
+          </div>
+        </div>
+        <div class="tech-card an d2">
+          <div class="info">
+            <h4>外联部</h4>
+            <p>对外交流与企业合作对接，拓展社团发展空间</p>
+          </div>
+        </div>
+        <div class="tech-card an d3">
+          <div class="info">
+            <h4>宣策部</h4>
+            <p>品牌宣传与活动策划，负责社团形象建设和推广</p>
+          </div>
+        </div>
+        <div class="tech-card an d4">
+          <div class="info">
+            <h4>组织部</h4>
+            <p>日常管理与活动组织，协调社团各项事务</p>
+          </div>
+        </div>
+        <div class="tech-card an d5">
+          <div class="info">
+            <h4>秘书处</h4>
+            <p>行政管理与文档工作，负责资料整理与会议记录</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2 class="an">技术方向</h2>
+      <p class="an d1">社团目前主要深耕三个技术方向：</p>
+      <ul class="an d2" style="margin-top:16px;padding-left:24px;color:var(--text-2);line-height:2">
+        <li><strong style="color:var(--text)">OpenHarmony</strong> — 开源鸿蒙分布式操作系统，探索万物互联的无限可能</li>
+        <li><strong style="color:var(--text)">openEuler</strong> — 企业级Linux操作系统研究，系统掌握国产基础设施核心技术栈</li>
+        <li><strong style="color:var(--text)">OpenTenBase</strong> — 腾讯开源数据库内核开发与优化</li>
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h2 class="an">荣誉与成果</h2>
+      <div class="honor-grid">
+        <div class="honor-item an d1">
+          <div class="year">2025</div>
+          <h4>开放原子菁英团奖</h4>
+          <p>全国仅3个团队入选</p>
+        </div>
+        <div class="honor-item an d2">
+          <div class="year">2025</div>
+          <h4>校源行优秀指导教师</h4>
+          <p>魏雨东老师</p>
+        </div>
+        <div class="honor-item an d3">
+          <div class="year">2025</div>
+          <h4>春耕计划优秀组织</h4>
+          <p>全国性认可</p>
+        </div>
+        <div class="honor-item an d4">
+          <div class="year">2024</div>
+          <h4>OpenTenBase核心贡献</h4>
+          <p>挑战赛获奖</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="admin.html">科成开放原子开源社团 · 因开放而精彩，因开源而未来</a>
+      <p class="copyright">© 2026 电子科技大学成都学院开放原子开源社团 版权所有</p>
+    </div>
+  </div>
+</footer>
+
+<script src="./js/theme.js"></script>
+<script src="./js/main.js"></script>
+</body>
+</html>
