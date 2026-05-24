@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>管理员后台 - 科成开放原子开源社团</title>
+<title id="adminTitle">管理员后台 - 科成开放原子开源社团</title>
+<link rel="icon" type="image/jpeg" href="../社团图标.jpg">
 <link rel="stylesheet" href="./css/theme.css">
 <style>
   body { background: var(--bg); color: var(--text); min-height: 100vh; }
@@ -67,99 +68,108 @@
 <div class="login-overlay" id="loginOverlay">
   <div class="login-box" style="position:relative;">
     <button onclick="closeLoginModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-2);width:32px;height:32px;display:flex;align-items:center;justify-content:center;">&times;</button>
-    <h2>管理员登录</h2>
-    <input type="text" id="username" placeholder="用户名" autocomplete="off">
-    <input type="password" id="password" placeholder="密码" autocomplete="off" onkeydown="if(event.key==='Enter')handleLogin()">
-    <button onclick="handleLogin()">登录</button>
-    <p class="login-error" id="loginError">用户名或密码错误</p>
+    <h2 id="loginH2">管理员登录</h2>
+    <input type="text" id="loginUser" placeholder="用户名" autocomplete="off">
+    <input type="password" id="loginPwd" placeholder="密码" autocomplete="off" onkeydown="if(event.key==='Enter')handleLogin()">
+    <button onclick="handleLogin()" id="loginBtn">登录</button>
+    <p class="login-error" id="loginErr">用户名或密码错误</p>
   </div>
 </div>
 
 <!-- Main Dashboard (hidden until logged in) -->
 <div class="admin-container" id="dashboard" style="display:none">
   <div class="admin-header">
-    <h1>申请管理后台</h1>
+    <h1 id="adminDashTitle">申请管理后台</h1>
     <div style="display:flex;gap:12px;align-items:center;">
       <span id="adminUsername" style="color:var(--text-2);font-size:14px;"></span>
-      <a href="index.html" class="back-btn">返回首页</a>
-      <button class="back-btn" onclick="handleLogout()">退出登录</button>
+      <a href="index.html" class="back-btn" id="backHome">返回首页</a>
+      <button class="back-btn" onclick="handleLogout()" id="logout">退出登录</button>
     </div>
   </div>
 
   <div class="stats-grid" id="statsGrid">
     <div class="stat-card">
       <div class="num" id="statTotal">0</div>
-      <div class="label">总申请数</div>
+      <div class="label" id="statTotalLabel">总申请数</div>
     </div>
     <div class="stat-card">
       <div class="num" id="statToday">0</div>
-      <div class="label">今日新增</div>
+      <div class="label" id="statTodayLabel">今日新增</div>
     </div>
   </div>
   <div class="stats-grid" style="margin-top:0;">
     <div class="stat-card">
       <div class="num" id="statProjects">0</div>
-      <div class="label">项目部</div>
+      <div class="label" id="deptProjectsLabel">项目部</div>
     </div>
     <div class="stat-card">
       <div class="num" id="statOutreach">0</div>
-      <div class="label">外联部</div>
+      <div class="label" id="deptOutreachLabel">外联部</div>
     </div>
     <div class="stat-card">
       <div class="num" id="statPublicity">0</div>
-      <div class="label">宣策部</div>
+      <div class="label" id="deptPublicityLabel">宣策部</div>
     </div>
     <div class="stat-card">
       <div class="num" id="statOrg">0</div>
-      <div class="label">组织部</div>
+      <div class="label" id="deptOrgLabel">组织部</div>
     </div>
     <div class="stat-card">
       <div class="num" id="statAdmin">0</div>
-      <div class="label">秘书处</div>
+      <div class="label" id="deptAdminLabel">秘书处</div>
     </div>
   </div>
 
   <div class="filter-bar">
     <select id="filterDept">
-      <option value="">全部部门</option>
-      <option value="projects">项目部</option>
-      <option value="outreach">外联部</option>
-      <option value="publicity">宣策部</option>
-      <option value="org">组织部</option>
-      <option value="admin">秘书处</option>
+      <option value="" id="filterAll">全部部门</option>
+      <option value="projects" id="deptProjectsOpt">项目部</option>
+      <option value="outreach" id="deptOutreachOpt">外联部</option>
+      <option value="publicity" id="deptPublicityOpt">宣策部</option>
+      <option value="org" id="deptOrgOpt">组织部</option>
+      <option value="admin" id="deptAdminOpt">秘书处</option>
     </select>
     <input type="text" id="searchEmail" placeholder="搜索邮箱...">
-    <button class="back-btn" onclick="loadApplications()">搜索</button>
-    <button class="back-btn" onclick="exportData()">导出 CSV</button>
+    <button class="back-btn" onclick="loadApplications()" id="searchBtn">搜索</button>
+    <button class="back-btn" onclick="exportData()" id="exportBtn">导出 CSV</button>
   </div>
 
   <div class="app-list" id="appList">
-    <div class="empty-state">加载中...</div>
+    <div class="empty-state" id="loadingState">加载中...</div>
   </div>
 </div>
 
 <!-- Detail Modal -->
 <div class="detail-overlay" id="detailOverlay" style="display:none">
   <div class="detail-box">
-    <h2>申请详情</h2>
-    <div id="detailContent"></div>
-    <button class="detail-close" onclick="closeDetail()">关闭</button>
+    <h2 id="detailTitle">申请详情</h2>
+    <div id="detailContent">
+      <div class="detail-row"><span class="detail-label" id="detailName">姓名</span><span class="detail-value"></span></div>
+      <div class="detail-row"><span class="detail-label" id="detailEmail">邮箱</span><span class="detail-value"></span></div>
+      <div class="detail-row"><span class="detail-label" id="detailDept">意向部门</span><span class="detail-value"></span></div>
+      <div class="detail-row"><span class="detail-label" id="detailMsg">申请理由</span><span class="detail-value"></span></div>
+      <div class="detail-row"><span class="detail-label" id="detailTime">提交时间</span><span class="detail-value"></span></div>
+    </div>
+    <button class="detail-close" onclick="closeDetail()" id="closeBtn">关闭</button>
   </div>
 </div>
 
 <!-- Confirm Modal -->
 <div class="confirm-overlay" id="confirmOverlay" style="display:none">
   <div class="confirm-box">
-    <h3>确认删除</h3>
-    <p>确定要删除这条申请记录吗？</p>
+    <h3 id="confirmTitle">确认删除</h3>
+    <p id="confirmMsg">确定要删除这条申请记录吗？</p>
     <div class="confirm-btns">
-      <button class="confirm-yes" onclick="confirmDelete()">删除</button>
-      <button class="confirm-no" onclick="closeConfirm()">取消</button>
+      <button class="confirm-yes" onclick="confirmDelete()" id="confirmDel">删除</button>
+      <button class="confirm-no" onclick="closeConfirm()" id="confirmCancel">取消</button>
     </div>
   </div>
 </div>
 
 <script src="./js/theme.js"></script>
+<script src="./js/main.js"></script>
+<script src="./js/db.js"></script>
+<script src="./js/main.js"></script>
 <script src="./js/db.js"></script>
 <script>
 (function() {
@@ -168,6 +178,7 @@
   let currentUser = null;
   let deleteTargetId = null;
   const deptNames = {projects:'项目部',outreach:'外联部',publicity:'宣策部',org:'组织部',admin:'秘书处','':'未选择'};
+  const deptNamesEn = {projects:'Project Dept',outreach:'Outreach',publicity:'Publicity',org:'Organization',admin:'Secretariat','':'Not selected'};
 
   // Check if already logged in
   function checkAuth() {
@@ -192,9 +203,10 @@
   function showLogin() {
     document.getElementById('loginOverlay').style.display = 'flex';
     document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('username').value = '';
-    document.getElementById('password').value = '';
-    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPwd').value = '';
+    document.getElementById('loginErr').style.display = 'none';
+    applyLang();
   }
 
   // Show dashboard
@@ -202,18 +214,19 @@
     document.getElementById('loginOverlay').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     document.getElementById('adminUsername').textContent = currentUser.username;
+    applyLang();
     loadApplications();
   }
 
   // Login handler
   window.handleLogin = function() {
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    if (!username || !password) return;
+    const loginUser = document.getElementById('loginUser').value.trim();
+    const loginPwd = document.getElementById('loginPwd').value;
+    if (!loginUser || !loginPwd) return;
 
-    const valid = DB.verifyAdmin(username, password);
+    const valid = DB.verifyAdmin(loginUser, loginPwd);
     if (valid) {
-      currentUser = { username };
+      currentUser = { username: loginUser };
       sessionStorage.setItem('cduestc_admin_session', JSON.stringify(currentUser));
       // Fade out and slide down login modal, then show dashboard
       const loginOverlay = document.getElementById('loginOverlay');
@@ -233,7 +246,7 @@
         showDashboard();
       }, 500);
     } else {
-      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('loginErr').style.display = 'block';
     }
   };
 
@@ -246,17 +259,12 @@
 
   // Cancel login - just close modal
   window.closeLoginModal = function() {
-    // Don't allow closing login modal - it's required
-    // Instead just clear the fields
-    document.getElementById('username').value = '';
-    document.getElementById('password').value = '';
-    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPwd').value = '';
+    document.getElementById('loginErr').style.display = 'none';
   };
 
-  // ESC key does nothing on login page - user must login
-  document.addEventListener('keydown', function(e) {
-    // Reserved for future keyboard shortcuts if needed
-  });
+  document.addEventListener('keydown', function(e) {});
 
   // Load applications
   function loadApplications() {
@@ -292,9 +300,12 @@
 
     const container = document.getElementById('appList');
     if (filtered.length === 0) {
-      container.innerHTML = '<div class="empty-state">暂无申请记录</div>';
+      container.innerHTML = '<div class="empty-state" id="emptyState">'+document.getElementById('emptyState').textContent+'</div>';
       return;
     }
+
+    const viewBtnText = document.getElementById('viewBtn').textContent;
+    const deleteBtnText = document.getElementById('confirmDel').textContent;
 
     container.innerHTML = filtered.map(app => `
       <div class="app-item">
@@ -305,8 +316,8 @@
         <div class="app-email">${escapeHtml(app.email)}</div>
         <div><span class="app-dept">${deptNames[app.dept] || '未选择'}</span></div>
         <div class="app-actions">
-          <button class="btn-view" onclick="viewDetail(${app.id})">查看</button>
-          <button class="btn-delete" onclick="showDeleteConfirm(${app.id})">删除</button>
+          <button class="btn-view" onclick="viewDetail(${app.id})">${viewBtnText}</button>
+          <button class="btn-delete" onclick="showDeleteConfirm(${app.id})">${deleteBtnText}</button>
         </div>
       </div>
     `).join('');
@@ -318,15 +329,19 @@
     const app = apps.find(a => a.id === id);
     if (!app) return;
 
-    const deptNamesEn = {projects:'Project Dept',outreach:'Outreach',publicity:'Publicity',org:'Organization',admin:'Secretariat','':'Not selected'};
     const dept = lang === 'zh' ? deptNames[app.dept] : deptNamesEn[app.dept];
+    const detailName = document.getElementById('detailName')?.textContent || '姓名';
+    const detailEmail = document.getElementById('detailEmail')?.textContent || '邮箱';
+    const detailDept = document.getElementById('detailDept')?.textContent || '意向部门';
+    const detailMsg = document.getElementById('detailMsg')?.textContent || '申请理由';
+    const detailTime = document.getElementById('detailTime')?.textContent || '提交时间';
 
     document.getElementById('detailContent').innerHTML = `
-      <div class="detail-row"><span class="detail-label">姓名</span><span class="detail-value">${escapeHtml(app.name)}</span></div>
-      <div class="detail-row"><span class="detail-label">邮箱</span><span class="detail-value">${escapeHtml(app.email)}</span></div>
-      <div class="detail-row"><span class="detail-label">意向部门</span><span class="detail-value">${dept}</span></div>
-      <div class="detail-row"><span class="detail-label">申请理由</span><span class="detail-value">${escapeHtml(app.message)}</span></div>
-      <div class="detail-row"><span class="detail-label">提交时间</span><span class="detail-value">${formatDateTime(app.createdAt)}</span></div>
+      <div class="detail-row"><span class="detail-label" id="detailName">${document.getElementById('detailName')?.textContent||'姓名'}</span><span class="detail-value">${escapeHtml(app.name)}</span></div>
+      <div class="detail-row"><span class="detail-label" id="detailEmail">${document.getElementById('detailEmail')?.textContent||'邮箱'}</span><span class="detail-value">${escapeHtml(app.email)}</span></div>
+      <div class="detail-row"><span class="detail-label" id="detailDept">${document.getElementById('detailDept')?.textContent||'意向部门'}</span><span class="detail-value">${dept}</span></div>
+      <div class="detail-row"><span class="detail-label" id="detailMsg">${document.getElementById('detailMsg')?.textContent||'申请理由'}</span><span class="detail-value">${escapeHtml(app.message)}</span></div>
+      <div class="detail-row"><span class="detail-label" id="detailTime">${document.getElementById('detailTime')?.textContent||'提交时间'}</span><span class="detail-value">${formatDateTime(app.createdAt)}</span></div>
     `;
     document.getElementById('detailOverlay').style.display = 'flex';
   };
@@ -361,7 +376,7 @@
   // Export CSV
   window.exportData = function() {
     const apps = DB.getAllApplications();
-    const headers = ['姓名', '邮箱', '部门', '申请理由', '提交时间'];
+    const headers = [document.getElementById('detailName')?.textContent || '姓名', document.getElementById('detailEmail')?.textContent || '邮箱', document.getElementById('detailDept')?.textContent || '部门', document.getElementById('detailMsg')?.textContent || '申请理由', document.getElementById('detailTime')?.textContent || '提交时间'];
     const rows = apps.map(app => [
       app.name, app.email, deptNames[app.dept] || '',
       app.message.replace(/\n/g, ' '), formatDateTime(app.createdAt)
@@ -402,7 +417,7 @@
   });
 
   // Init
-  document.addEventListener('DOMContentLoaded', checkAuth);
+  document.addEventListener('DOMContentLoaded', () => { checkAuth(); applyLang(); });
 })();
 </script>
 </body>

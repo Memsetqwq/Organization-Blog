@@ -2,7 +2,7 @@
   'use strict';
 
   /* ===== I18N ===== */
-let lang='zh';
+let lang=localStorage.getItem('lang')||'zh';
 const T={
   zh:{
     heroTitle:'因开放而精彩，因开源而未来',heroSub:'开放原子开源基金会 · 电子科技大学成都学院',heroScroll:'Scroll',
@@ -40,6 +40,9 @@ const T={
     footerJoin:'加入我们',footerDesc:'科成开放原子开源社团 · 因开放而精彩，因开源而未来',
     followLabel:'关注我们',
     navHome:'首页',navAbout:'社团简介',navNews:'新闻动态',navProjects:'导航站',navLogin:'登录',
+    projectsNavTitle:'导航站',projectsNavDesc:'精选开源资源与技术链接',
+    newsNavTitle:'新闻动态',newsNavDesc:'每一次实践，都是向开源世界更近一步',newsDetailBack:'返回新闻动态',newsDetailBackLink:'返回新闻动态',newsLoadMore:'加载更多',
+    newsDetailBack:'返回新闻动态',newsDetailTitle:'新闻详情',newsDetailNotFound:'新闻不存在',
     mTitle:'加入科成开源社团',mSub:'填写以下信息，我们将通过邮件与你联系',
     mNameLabel:'姓名',mNamePh:'请输入你的姓名',
     mEmailLabel:'邮箱',mEmailPh:'your@email.com',
@@ -48,6 +51,31 @@ const T={
     mHint:'请介绍你的技术背景、感兴趣的领域（OpenHarmony / openEuler / OpenTenBase），以及为什么想加入我们。',
     mMsgPh:'例如：我是计算机专业大二学生，对开源鸿蒙系统很感兴趣，希望通过社团学习分布式操作系统开发...',
     mCancel:'取消',mSubmit:'提交申请',
+    loginTitle:'登录',loginH2:'管理员登录',loginSub:'登录后管理社团申请记录',
+    loginUserLabel:'用户名',loginUserPh:'请输入用户名',
+    loginPwdLabel:'密码',loginPwdPh:'请输入密码',
+    loginBtn:'登录',loginErr:'用户名或密码错误',
+    adminTitle:'管理员后台',adminDashTitle:'申请管理后台',
+    statTotal:'总申请数',statToday:'今日新增',
+    deptProjects:'项目部',deptOutreach:'外联部',deptPublicity:'宣策部',deptOrg:'组织部',deptAdmin:'秘书处',
+    filterAll:'全部部门',filterPlaceholder:'搜索邮箱...',searchBtn:'搜索',exportBtn:'导出 CSV',
+    emptyState:'暂无申请记录',loadingState:'加载中...',
+    detailTitle:'申请详情',detailName:'姓名',detailEmail:'邮箱',detailDept:'意向部门',detailMsg:'申请理由',detailTime:'提交时间',
+    confirmTitle:'确认删除',confirmMsg:'确定要删除这条申请记录吗？',confirmDel:'删除',confirmCancel:'取消',
+    backHome:'返回首页',logout:'退出登录',viewBtn:'查看',closeBtn:'关闭',
+    aboutPageTitle:'关于社团',aboutPageDesc:'科成开放原子开源社团成立于2024年，由开放原子开源基金会联合腾讯共同发起',
+    aboutSection1Title:'社团简介',aboutSection1Desc:'科成开放原子开源社团是由电子科技大学成都学院学生自发组织的开源技术社团。社团致力于推广开源文化，培养学生的开源精神和实践能力，连接校园与产业，为中国开源生态发展贡献力量。',
+    aboutSection2Title:'组织架构',
+    deptProjectsName:'项目部',deptProjectsDesc:'负责技术开发与开源项目维护，参与实际开源项目贡献',
+    deptOutreachName:'外联部',deptOutreachDesc:'对外交流与企业合作对接，拓展社团发展空间',
+    deptPublicityName:'宣策部',deptPublicityDesc:'品牌宣传与活动策划，负责社团形象建设和推广',
+    deptOrgName:'组织部',deptOrgDesc:'日常管理与活动组织，协调社团各项事务',
+    deptAdminName:'秘书处',deptAdminDesc:'行政管理与文档工作，负责资料整理与会议记录',
+    aboutSection3Title:'技术方向',aboutSection3Desc:'社团目前主要深耕三个技术方向：',
+    techHarmonyDesc:'— 开源鸿蒙分布式操作系统，探索万物互联的无限可能',
+    techEulerDesc:'— 企业级Linux操作系统研究，从内核到生产部署',
+    techTenBaseDesc:'— 腾讯开源数据库内核开发与优化',
+    aboutSection4Title:'荣誉与成果',
   },
   en:{
     heroTitle:'Open for Brilliance, Source for Future',heroSub:'OpenAtom Foundation · CDUESTC',heroScroll:'Scroll',
@@ -85,6 +113,9 @@ const T={
     footerJoin:'Join Us',footerDesc:'CDUESTC OPEN SOURCE CLUB · Open for Brilliance, Source for Future',
     followLabel:'Follow Us',
     navHome:'Home',navAbout:'About',navNews:'News',navProjects:'Projects',navLogin:'Login',
+    projectsNavTitle:'Projects',projectsNavDesc:'Curated open source resources and tech links',
+    newsNavTitle:'News',newsNavDesc:'Every practice brings us closer to the open source world',newsDetailBack:'Back to News',newsDetailBackLink:'Back to News',newsLoadMore:'Load More',
+    newsDetailBack:'Back to News',newsDetailTitle:'News Detail',newsDetailNotFound:'News not found',
     mTitle:'Join KC Open Source',mSub:'Fill in your info and we will contact you via email',
     mNameLabel:'Name',mNamePh:'Your name',
     mEmailLabel:'Email',mEmailPh:'your@email.com',
@@ -93,18 +124,64 @@ const T={
     mHint:'Introduce your background, interests (OpenHarmony / openEuler / OpenTenBase), and why you want to join.',
     mMsgPh:'e.g. CS sophomore interested in OpenHarmony distributed OS...',
     mCancel:'Cancel',mSubmit:'Submit',
+    loginTitle:'Login',loginH2:'Admin Login',loginSub:'Manage club applications after login',
+    loginUserLabel:'Username',loginUserPh:'Enter username',
+    loginPwdLabel:'Password',loginPwdPh:'Enter password',
+    loginBtn:'Login',loginErr:'Username or password incorrect',
+    adminTitle:'Admin Dashboard',adminDashTitle:'Application Management',
+    aboutPageTitle:'About Us',aboutPageDesc:'Founded in 2024, jointly initiated by OpenAtom Foundation and Tencent',
+    aboutSection1Title:'About',aboutSection1Desc:'CDUESTC Open Source Club is a student-led open source technology club. We promote open source culture, develop students open source spirit and practical abilities, bridge campus and industry, and contribute to China open source ecosystem.',
+    aboutSection2Title:'Organization Structure',
+    deptProjectsName:'Project Dept',deptProjectsDesc:'Technical development and open source project maintenance, participating in actual open source contributions',
+    deptOutreachName:'Outreach',deptOutreachDesc:'External communication and enterprise cooperation, expanding club development space',
+    deptPublicityName:'Publicity',deptPublicityDesc:'Brand promotion and event planning, responsible for club image building and promotion',
+    deptOrgName:'Organization',deptOrgDesc:'Daily management and event organization, coordinating club affairs',
+    deptAdminName:'Secretariat',deptAdminDesc:'Administrative management and documentation, responsible for data organization and meeting records',
+    aboutSection3Title:'Technical Directions',aboutSection3Desc:'The club currently focuses on three main technical directions:',
+    techHarmonyDesc:'— Distributed OS exploring infinite IoT possibilities',
+    techEulerDesc:'— Enterprise Linux OS research, from kernel to production',
+    techTenBaseDesc:'— Tencent open source database kernel development',
+    aboutSection4Title:'Honors & Achievements',
+    statTotal:'Total Applications',statToday:'New Today',
+    deptProjects:'Project Dept',deptOutreach:'Outreach',deptPublicity:'Publicity',deptOrg:'Organization',deptAdmin:'Secretariat',
+    filterAll:'All Departments',filterPlaceholder:'Search email...',searchBtn:'Search',exportBtn:'Export CSV',
+    emptyState:'No applications yet',loadingState:'Loading...',
+    detailTitle:'Application Detail',detailName:'Name',detailEmail:'Email',detailDept:'Department',detailMsg:'Reason',detailTime:'Submitted',
+    confirmTitle:'Confirm Deletion',confirmMsg:'Are you sure you want to delete this application?',confirmDel:'Delete',confirmCancel:'Cancel',
+    backHome:'Back to Home',logout:'Logout',viewBtn:'View',closeBtn:'Close',
   }
 };
 
 function applyLang(){
   const d=T[lang];document.title=lang=='zh'?'科成开放原子开源社团':'CDUESTC OPEN SOURCE CLUB';
-  const ids=['heroTitle','heroSub','heroScroll','aboutTitle','aboutDesc','aboutCard1t','aboutCard1d','aboutCard2t','aboutCard2d','aboutCard3t','aboutCard3d','techTitle','techDesc','techCard1','techCard1t','techCard1Tag','techCard2','techCard2t','techCard2Tag','techCard3','techCard3t','techCard3Tag','eventsTitle','eventsDesc','event1t','event1d','event1Date','event1Meta','event2t','event2d','event2Date','event2Meta','event3t','event3d','event3Date','event3Meta','membersTitle','membersDesc','member1Title','member2Title','member3Title','member4Title','member5Title','role1','role2','role3','role4','role5','honorsTitle','honorsDesc','honor1','honor1Desc','honor2','honor2Desc','honor3','honor3Desc','honor4','honor4Desc','projectsTitle','projectsDesc','proj1Name','proj1Desc','proj1Lang','proj2Name','proj2Desc','proj2Lang','proj3Name','proj3Desc','proj3Lang','proj4Name','proj4Desc','proj4Lang','footerJoin','footerDesc','followLabel','navHome','navAbout','navNews','navProjects','navLogin','mTitle','mSub','mNameLabel','mEmailLabel','mDeptLabel','mMsgLabel','mHint','mCancel','mSubmit'];
+  const ids=['heroTitle','heroSub','heroScroll','aboutTitle','aboutDesc','aboutCard1t','aboutCard1d','aboutCard2t','aboutCard2d','aboutCard3t','aboutCard3d','techTitle','techDesc','techCard1','techCard1t','techCard1Tag','techCard2','techCard2t','techCard2Tag','techCard3','techCard3t','techCard3Tag','eventsTitle','eventsDesc','event1t','event1d','event1Date','event1Meta','event2t','event2d','event2Date','event2Meta','event3t','event3d','event3Date','event3Meta','membersTitle','membersDesc','member1Title','member2Title','member3Title','member4Title','member5Title','role1','role2','role3','role4','role5','honorsTitle','honorsDesc','honor1','honor1Desc','honor2','honor2Desc','honor3','honor3Desc','honor4','honor4Desc','projectsTitle','projectsDesc','proj1Name','proj1Desc','proj1Lang','proj2Name','proj2Desc','proj2Lang','proj3Name','proj3Desc','proj3Lang','proj4Name','proj4Desc','proj4Lang','footerJoin','footerDesc','followLabel','navHome','navAbout','navNews','navProjects','navLogin','projectsNavTitle','projectsNavDesc','newsNavTitle','newsNavDesc','newsDetailNotFound','mTitle','mSub','mNameLabel','mEmailLabel','mDeptLabel','mMsgLabel','mHint','mCancel','mSubmit','loginTitle','loginH2','loginSub','loginUserLabel','loginPwdLabel','loginBtn','loginErr',
+    'adminTitle','adminDashTitle','statTotal','statToday',
+    'deptProjects','deptOutreach','deptPublicity','deptOrg','deptAdmin',
+    'filterAll','filterPlaceholder','searchBtn','exportBtn',
+    'emptyState','loadingState','detailTitle',
+    'confirmTitle','confirmMsg','confirmDel','confirmCancel',
+    'backHome','logout','viewBtn','closeBtn',
+    'aboutPageTitle','aboutPageDesc',
+    'aboutSection1Title','aboutSection1Desc',
+    'aboutSection2Title',
+    'deptProjectsName','deptProjectsDesc',
+    'deptOutreachName','deptOutreachDesc',
+    'deptPublicityName','deptPublicityDesc',
+    'deptOrgName','deptOrgDesc',
+    'deptAdminName','deptAdminDesc',
+    'aboutSection3Title','aboutSection3Desc',
+    'techHarmonyDesc','techEulerDesc','techTenBaseDesc',
+    'aboutSection4Title'];
   for(const k of ids){const el=document.getElementById(k);if(el)el.textContent=d[k];}
+  const langBtn=document.getElementById('langBtn');if(langBtn)langBtn.textContent=lang=='zh'?'EN':'中';
   const mName=document.getElementById('mName');if(mName)mName.placeholder=d.mNamePh;
   const mEmail=document.getElementById('mEmail');if(mEmail)mEmail.placeholder=d.mEmailPh;
   const mMsg=document.getElementById('mMsg');if(mMsg)mMsg.placeholder=d.mMsgPh;
+  const loginUser=document.getElementById('loginUser');if(loginUser)loginUser.placeholder=d.loginUserPh;
+  const loginPwd=document.getElementById('loginPwd');if(loginPwd)loginPwd.placeholder=d.loginPwdPh;
+  const searchEmail=document.getElementById('searchEmail');if(searchEmail)searchEmail.placeholder=d.filterPlaceholder;
 }
-window.toggleLang = function() {lang=lang=='zh'?'en':'zh';document.getElementById('langBtn').textContent=lang=='zh'?'EN':'中';applyLang();}
+window.toggleLang = function() {lang=lang=='zh'?'en':'zh';localStorage.setItem('lang',lang);document.getElementById('langBtn').textContent=lang=='zh'?'EN':'中';applyLang();}
 
 /* ===== SCROLL ANIMATION ===== */
 let lastScrollY=0;
@@ -233,16 +310,48 @@ document.addEventListener('click', function(e) {
 
   let currentIndex=0;
   let autoplayTimer=null;
-  const AUTOPLAY_INTERVAL=6000;
+  const AUTOPLAY_INTERVAL=4000;
+
+  function resetProgressBar(dot){
+    const bar = dot.querySelector('.progress-bar');
+    if(!bar) return;
+    bar.style.transition = 'none';
+    bar.style.transform = 'scaleX(0)';
+  }
+
+  function startProgressBar(dot){
+    const bar = dot.querySelector('.progress-bar');
+    if(!bar) return;
+    bar.style.transition = 'none';
+    bar.style.transform = 'scaleX(0)';
+    void bar.offsetWidth;
+    bar.style.transition = 'transform 4s linear, transform-origin 0s';
+    bar.style.transform = 'scaleX(1)';
+  }
+
+  function resetAllBars(){
+    dots.forEach((dot, i) => {
+      if(i === currentIndex){
+        dot.classList.add('active');
+        resetProgressBar(dot);
+        startProgressBar(dot);
+      } else {
+        dot.classList.remove('active');
+        resetProgressBar(dot);
+      }
+    });
+  }
 
   function goToSlide(index){
     if(index<0) index=slides.length-1;
     if(index>=slides.length) index=0;
     slides[currentIndex].classList.remove('active');
     dots[currentIndex].classList.remove('active');
+    resetProgressBar(dots[currentIndex]);
     currentIndex=index;
     slides[currentIndex].classList.add('active');
     dots[currentIndex].classList.add('active');
+    startProgressBar(dots[currentIndex]);
   }
 
   function nextSlide(){goToSlide(currentIndex+1)}
@@ -250,10 +359,14 @@ document.addEventListener('click', function(e) {
 
   function startAutoplay(){
     stopAutoplay();
-    autoplayTimer=setInterval(nextSlide,AUTOPLAY_INTERVAL);
+    autoplayTimer=setTimeout(function loop(){
+      nextSlide();
+      autoplayTimer=setTimeout(loop, AUTOPLAY_INTERVAL);
+    }, AUTOPLAY_INTERVAL);
+    startProgressBar(dots[currentIndex]);
   }
   function stopAutoplay(){
-    if(autoplayTimer){clearInterval(autoplayTimer);autoplayTimer=null;}
+    if(autoplayTimer){clearTimeout(autoplayTimer);autoplayTimer=null;}
   }
 
   if(prevBtn) prevBtn.addEventListener('click',()=>{prevSlide();startAutoplay();});
@@ -288,9 +401,10 @@ document.addEventListener('click', function(e) {
   container.addEventListener('mouseenter',stopAutoplay);
   container.addEventListener('mouseleave',startAutoplay);
 
+  resetAllBars();
   startAutoplay();
 
-  document.addEventListener('visibilitychange',()=>{
+  document.addEventListener('visibilitychange',() =>{
     if(document.hidden) stopAutoplay();
     else startAutoplay();
   });
@@ -325,5 +439,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 
 document.querySelector('.hero')?.classList.add('in-view');
+
+applyLang();
 
 })();

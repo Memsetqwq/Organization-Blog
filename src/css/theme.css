@@ -254,6 +254,21 @@ body{
 }
 .slide.active{opacity:1}
 
+/* 顶部1/8渐隐 */
+.slider-container::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:12.5%;z-index:2;pointer-events:none;
+  background:linear-gradient(to bottom,var(--bg),transparent);
+}
+/* 底部1/8渐隐 */
+.slider-container::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;
+  height:12.5%;z-index:2;pointer-events:none;
+  background:linear-gradient(to top,var(--bg),transparent);
+}
+
 .slider-overlay{
   position:absolute;inset:0;
   background:linear-gradient(135deg, rgba(13,17,23,0.4) 0%, rgba(13,17,23,0.2) 50%, rgba(13,17,23,0.5) 100%);
@@ -268,11 +283,19 @@ body{
   width:8px;height:8px;border-radius:50%;
   background:rgba(255,255,255,.35);
   cursor:pointer;transition:all .35s ease;
+  position:relative;overflow:hidden;
 }
 .indicator:hover{background:rgba(255,255,255,.6)}
 .indicator.active{
-  background:var(--accent);
-  transform:scale(1.3);
+  width:24px;height:4px;border-radius:2px;
+  background:rgba(255,255,255,.35);
+  cursor:pointer;
+}
+.indicator .progress-bar{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(90deg,#fff,var(--accent));
+  border-radius:2px;
+  transform:scaleX(0);transform-origin:left center;
 }
 
 .slider-arrows{
@@ -315,21 +338,12 @@ body{
 }
 [data-theme="light"] .hero .motto{color:#fff}
 .hero .motto{color:var(--text-2);opacity:.8}
-.hero .scroll{color:var(--text-2);opacity:.6}
 .hero .motto{
   font-size:clamp(15px,2.2vw,20px);
   font-weight:300;color:var(--text-2);
   letter-spacing:.12em;text-transform:uppercase;
   margin-bottom:52px;
 }
-.hero .scroll{
-  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
-  color:var(--text-2);font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;text-decoration:none;z-index:4;
-  animation:float 3s ease-in-out infinite;
-}
-.hero .scroll::after{content:'';display:block;width:1px;height:36px;background:var(--text-2);margin:14px auto 0;opacity:.35}
-@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
 
 /* ===== SECTIONS ===== */
 .section{padding:100px 28px;max-width:1200px;margin:0 auto}
@@ -616,7 +630,8 @@ body{
 
 /* ===== PROJECTS PAGE ===== */
 .links-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:20px;
+  max-width:800px;margin:0 auto;
 }
 .link-card{
   display:block;background:var(--bg-2);border-radius:16px;border:1px solid var(--border);

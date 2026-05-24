@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>新闻详情 - 科成开放原子开源社团</title>
+<link rel="icon" type="image/jpeg" href="../社团图标.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="./css/theme.css">
@@ -23,8 +24,6 @@
       <a href="news.html" data-page="news" class="active" id="navNews">新闻动态</a>
       <a href="projects.html" data-page="projects" id="navProjects">导航站</a>
       <a href="login.html" data-page="login" id="navLogin">登录</a>
-      <div class="nav-ext">预留1</div>
-      <div class="nav-ext">预留2</div>
     </div>
     <div class="ctrl">
       <div class="theme-toggle-wrap" title="切换主题">
@@ -42,16 +41,62 @@
 <main class="news-detail an" id="newsDetail">
 </main>
 
-<footer class="footer">
+<footer class="footer" id="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="admin.html">科成开放原子开源社团 · 因开放而精彩，因开源而未来</a>
+      <span id="footerDesc" style="color:inherit;text-decoration:none;">科成开放原子开源社团 · 因开放而精彩，因开源而未来</span>
       <p class="copyright">© 2026 电子科技大学成都学院开放原子开源社团 版权所有</p>
+    </div>
+    <div class="links">
+      <button onclick="openJoin()" id="footerJoin">加入我们</button>
+      <a href="https://github.com/CDUESTC-OpenAtom-Open-Source-Club" target="_blank" rel="noopener">GitHub</a>
+      <div class="follow-us" id="followUs" onclick="toggleQrExpand()">
+        <span class="follow-label" id="followLabel">关注我们</span>
+        <div class="qr-wrapper">
+          <img src="../社团微信公众号二维码.png" alt="微信公众号二维码" class="qr-code qr-small" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23161B22%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%238B949E%22 font-size=%2212%22>二维码</text></svg>'">
+          <div class="qr-expand-box">
+            <img src="../社团微信公众号二维码.png" alt="微信公众号二维码" class="qr-code qr-large" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23161B22%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%238B949E%22 font-size=%2212%22>二维码</text></svg>'">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
 
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+
+<!-- JOIN MODAL -->
+<div class="modal" id="joinModal">
+  <div class="modal-box">
+    <button class="close" onclick="closeJoin()">&times;</button>
+    <h3 id="mTitle">加入科成开源社团</h3>
+    <p class="subtitle" id="mSub">填写以下信息，我们将通过邮件与你联系</p>
+    <label id="mNameLabel">姓名</label>
+    <input type="text" id="mName" placeholder="请输入你的姓名">
+    <label id="mEmailLabel">邮箱</label>
+    <input type="email" id="mEmail" placeholder="your@email.com">
+    <label id="mDeptLabel">意向部门</label>
+    <select id="mDept">
+      <option value="">请选择意向部门</option>
+      <option value="projects">项目部 — 技术开发与开源项目维护</option>
+      <option value="outreach">外联部 — 对外交流与企业合作对接</option>
+      <option value="publicity">宣策部 — 品牌宣传与活动策划</option>
+      <option value="org">组织部 — 日常管理与活动组织</option>
+      <option value="admin">秘书处 — 行政管理与文档工作</option>
+    </select>
+    <label id="mMsgLabel">自我介绍 / 申请理由</label>
+    <p class="hint" id="mHint">请介绍你的技术背景、感兴趣的领域（OpenHarmony / openEuler / OpenTenBase），以及为什么想加入我们。</p>
+    <textarea id="mMsg" rows="5" placeholder="例如：我是计算机专业大二学生，对开源鸿蒙系统很感兴趣，希望通过社团学习分布式操作系统开发..."></textarea>
+    <div class="btns">
+      <button class="cn" onclick="closeJoin()" id="mCancel">取消</button>
+      <button class="sb" onclick="submitJoin()" id="mSubmit">提交申请</button>
+    </div>
+  </div>
+</div>
+
 <script src="./js/theme.js"></script>
+<script src="./js/db.js"></script>
 <script src="./js/main.js"></script>
 <script>
 async function loadNewsDetail() {
@@ -64,21 +109,22 @@ async function loadNewsDetail() {
     const item = news.find(n => n.id === id);
 
     if (!item) {
-      document.getElementById('newsDetail').innerHTML = '<p style="text-align:center;padding:120px 0">新闻不存在</p>';
+      document.getElementById('newsDetail').innerHTML = '<p style="text-align:center;padding:120px 0" id="newsDetailNotFound">新闻不存在</p>';
       return;
     }
 
-    document.title = item.title + ' - 科成开放原子开源社团';
+    document.title = (item.title || '') + ' - 科成开放原子开源社团';
+    const backLinkText = document.getElementById('newsDetailBackLink')?.textContent || '返回新闻动态';
     document.getElementById('newsDetail').innerHTML = `
-      <a href="news.html" class="back-link">返回新闻列表</a>
-      <div class="news-meta">${item.date} · ${item.category}</div>
-      <h1>${item.title}</h1>
-      <img src="${item.cover}" alt="${item.title}" class="cover-img" onerror="this.style.display='none'">
+      <a href="news.html" class="back-link" id="newsDetailBackLink">${backLinkText}</a>
+      <div class="news-meta">${item.date || ''} · ${item.category || ''}</div>
+      <h1 id="newsDetailTitle">${item.title || ''}</h1>
+      <img src="${item.cover || ''}" alt="${item.title || ''}" class="cover-img" onerror="this.style.display='none'">
       <div class="content">
-        <p>${item.content}</p>
+        <p>${item.content || ''}</p>
       </div>
       <div style="margin-top:32px">
-        ${item.tags.map(tag => `<span class="news-tag" style="margin-right:8px">${tag}</span>`).join('')}
+        ${(item.tags || []).map(tag => `<span class="news-tag" style="margin-right:8px">${tag}</span>`).join('')}
       </div>
     `;
 
@@ -90,7 +136,7 @@ async function loadNewsDetail() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadNewsDetail);
+document.addEventListener('DOMContentLoaded', () => { loadNewsDetail(); applyLang(); });
 </script>
 </body>
 </html>
